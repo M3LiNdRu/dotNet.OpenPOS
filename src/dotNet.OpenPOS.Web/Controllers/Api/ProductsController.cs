@@ -16,7 +16,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpGet]
         public async Task<BaseResponse> Get()
         {
-            return base.Ok();
+            return new BaseResponse(true, null, "GetProductMethod");
         }
 
         // GET api/values/5
