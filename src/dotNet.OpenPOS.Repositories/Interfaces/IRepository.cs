@@ -8,10 +8,10 @@ namespace dotNet.OpenPOS.Repositories.Interfaces
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> FindByIdAsync(int id);
-        Task<T> FindByCodeAsync(string code);
+        //Task<T> FindByCodeAsync(string code);
         Task<T> FindByNameAsync(string name);
-        bool InsertAsync(T entity);
-        bool UpdateAsync(T entity);
-        bool DeleteAsync(int id);
+        Task<bool> InsertAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
+        Task<bool> DeleteAsync(int id);
     }
 }

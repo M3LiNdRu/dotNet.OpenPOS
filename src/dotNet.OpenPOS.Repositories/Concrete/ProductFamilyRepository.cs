@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using dotNet.OpenPOS.Domain.Models;
@@ -7,7 +8,7 @@ using dotNet.OpenPOS.Repositories.Interfaces;
 
 namespace dotNet.OpenPOS.Repositories.Concrete
 {
-    public class ProductFamilyRepository //: Repository<T>, IProductFamilyRepository
+    public class ProductFamilyRepository : IProductFamilyRepository
     {
         private readonly IDatabaseContext _context;
 
@@ -16,39 +17,38 @@ namespace dotNet.OpenPOS.Repositories.Concrete
             _context = context;
         }
 
-        public bool DeleteAsync(int id)
+        public async Task<ProductFamily> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Families.Where(f => f.Id == id).FirstOrDefault();
         }
 
-        public Task<ProductFamily> FindByCodeAsync(string code)
+        public async Task<ProductFamily> FindByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return _context.Families.Where(f => f.Name == name).FirstOrDefault();
         }
 
-        public Task<ProductFamily> FindByIdAsync(int id)
+        public async Task<IEnumerable<ProductFamily>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.Families;
         }
 
-        public Task<ProductFamily> FindByNameAsync(string name)
+        public async Task<bool> InsertAsync(ProductFamily entity)
         {
-            throw new NotImplementedException();
+            return _context.Families.Add(entity);
         }
 
-        public Task<IEnumerable<ProductFamily>> GetAllAsync()
+        public async Task<bool> UpdateAsync(ProductFamily entity)
         {
-            throw new NotImplementedException();
+            _context.Families.Remove(entity);
+
+            return _context.Families.Add(entity);
         }
 
-        public bool InsertAsync(ProductFamily entity)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
-        }
+            var entity = _context.Families.FirstOrDefault(x => x.Id == id);
 
-        public bool UpdateAsync(ProductFamily entity)
-        {
-            throw new NotImplementedException();
+            return _context.Families.Remove(entity);
         }
     }
 }
