@@ -33,6 +33,7 @@ namespace dotNet.OpenPOS.Web
             services.AddSingleton<IDatabaseContext, InMemoryDatabaseContext>();
             services.AddTransient<IProductFamilyRepository, ProductFamilyRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
 
 
             // Add framework services.

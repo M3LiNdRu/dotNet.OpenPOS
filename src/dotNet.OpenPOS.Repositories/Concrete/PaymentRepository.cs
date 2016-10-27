@@ -1,0 +1,60 @@
+﻿using dotNet.OpenPOS.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using dotNet.OpenPOS.Domain.Models;
+
+namespace dotNet.OpenPOS.Repositories.Concrete
+{
+    public class PaymentRepository : IPaymentRepository
+    {
+        private readonly IDatabaseContext _context;
+
+        public PaymentRepository(IDatabaseContext context)
+        {
+            _context = context;
+        }
+        
+        public async Task<Payment> FindByIdAsync(int id)
+        {
+            return _context.Payments.FirstOrDefault(p => p.Id == id);
+        }
+
+        public async Task<IEnumerable<Payment>> FindByOrderIdAsync(int id)
+        {
+            return _context.Payments.Where(p => p.OrderId == id);
+        }
+
+        //TODO: Remove from general repository interface
+        public async Task<Payment> FindByNameAsync(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Payment>> GetAllAsync()
+        {
+            return _context.Payments;
+        }
+
+        public async Task<bool> InsertAsync(Payment entity)
+        {
+            return _context.Payments.Add(entity);
+        }
+
+        public async Task<bool> UpdateAsync(Payment entity)
+        {
+            _context.Payments.Remove(entity);
+
+            return _context.Payments.Add(entity);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var entity = _context.Payments.FirstOrDefault(x => x.Id == id);
+
+            return _context.Payments.Remove(entity);
+        }
+
+    }
+}
