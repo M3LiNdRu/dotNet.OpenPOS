@@ -26,12 +26,6 @@ namespace dotNet.OpenPOS.Repositories.Concrete
             return _context.Payments.Where(p => p.OrderId == id);
         }
 
-        //TODO: Remove from general repository interface
-        public async Task<Payment> FindByNameAsync(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<Payment>> GetAllAsync()
         {
             return _context.Payments;
