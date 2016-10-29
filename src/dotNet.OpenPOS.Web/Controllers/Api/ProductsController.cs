@@ -22,7 +22,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
             _productsRepo = productsRepo;
         }
 
-        // GET: api/values
+        // GET: api/products
         [HttpGet]
         public async Task<BaseResponse> Get()
         {

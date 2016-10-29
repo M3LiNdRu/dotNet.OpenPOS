@@ -5,9 +5,10 @@
 <div id="container-pos">
 
     <div class="row">
-        <div class="order col-md-6">
+        <div class="order col-md-6" ng-controller="OrdersController as orders">
         </div>
-        <div class="products col-md-6">
+        <div class="products col-md-6" ng-controller="ProductsController as products">
+            <p>{{products.products}}</p>
         </div>
     </div>
     <div class="row">
