@@ -36,3 +36,7 @@ textarea {
     display: none
   }
 }
+
+div .navbar-collapse .collapse {
+    float: right;
+}
