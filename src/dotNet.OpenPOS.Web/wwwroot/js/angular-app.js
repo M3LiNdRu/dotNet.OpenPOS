@@ -3,14 +3,15 @@
 
     app.controller("ProductsController", function ($scope, $http) {
 
-        $http.get("api/products").then(
-            function mySucces(response) {
-                $scope.products = response.data;
-            },
-            function myError(response) {
-                $scope.myWelcome = response.statusText;
-            }
-        );
+        // Get products asynchronously
+        //$http.get("api/products").then(
+        //    function mySucces(response) {
+        //        $scope.products = response.data;
+        //    },
+        //    function myError(response) {
+        //        $scope.myWelcome = response.statusText;
+        //    }
+        //);
 
     });
 
