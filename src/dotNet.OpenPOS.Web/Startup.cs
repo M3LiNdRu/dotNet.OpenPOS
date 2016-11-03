@@ -35,6 +35,7 @@ namespace dotNet.OpenPOS.Web
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
 
 
             // Add framework services.
