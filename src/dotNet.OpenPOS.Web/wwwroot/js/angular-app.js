@@ -15,6 +15,15 @@
 
     });
 
-    app.controller("OrdersController", function () { });
+    app.controller("OrdersController", function () {
+        this.currentOrder = {
+            Name: 'NewOrder',
+            Reference: 'NewOrder-00',
+            Products: [],
+            BaseTotal: 0,
+            TaxTotal: 0,
+            Total: 0
+        };
+    });
 
 })();
