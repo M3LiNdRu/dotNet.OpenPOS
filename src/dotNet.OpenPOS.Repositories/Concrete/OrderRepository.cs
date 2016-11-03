@@ -1,5 +1,4 @@
 ﻿using dotNet.OpenPOS.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,5 +49,9 @@ namespace dotNet.OpenPOS.Repositories.Concrete
             return _context.Orders.Remove(entity);
         }
 
+        public async Task<IEnumerable<Order>> GetDailyOrders()
+        {
+            return _context.Orders.OrderBy(o => o.CreatedDate).Take(10);
+        }
     }
 }

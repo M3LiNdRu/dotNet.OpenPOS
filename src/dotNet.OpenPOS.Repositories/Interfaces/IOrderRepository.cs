@@ -7,5 +7,6 @@ namespace dotNet.OpenPOS.Repositories.Interfaces
     public interface IOrderRepository : IRepository<Order>
     {
         Task<IEnumerable<Order>> FindByNameAsync(string name);
+        Task<IEnumerable<Order>> GetDailyOrders();
     }
 }

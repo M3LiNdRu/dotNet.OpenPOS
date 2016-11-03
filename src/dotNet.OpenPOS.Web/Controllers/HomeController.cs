@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using dotNet.OpenPOS.Web.Models;
 
 namespace dotNet.OpenPOS.Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace dotNet.OpenPOS.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var model = new HomeViewModel();
             var viewProducts = new Dictionary<string, IEnumerable<Product>>();
 
             var families = await _productFamilyRepository.GetAllAsync();
@@ -34,14 +36,11 @@ namespace dotNet.OpenPOS.Web.Controllers
                 viewProducts.Add(family.Name, products.Where(p => p.FamilyId == family.Id));
             }
 
-            ViewData["Products"] = viewProducts;
-            ViewData["Orders"] = orders;
-            ViewData["TopProducts"] = products
-                .OrderBy(p => p.Sales)
-                .Take(5)
-                .Select(p => new { Name = p.Name, Sales = p.Sales });
+            model.Products = viewProducts;
+            model.LastDailyOrders = orders;
+            model.TopProducts = products.OrderBy(p => p.Sales).Take(5);
 
-            return View();
+            return View(model);
         }
 
         public async Task<IActionResult> About()
