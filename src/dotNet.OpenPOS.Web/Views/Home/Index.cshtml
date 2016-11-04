@@ -28,17 +28,22 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr ng-repeat="(key, value) in orders.currentOrder.Products">
+                        <td>{{value.Name}}</td>
+                        <td>{{value.Quantity}}</td>
+                        <td>{{value.Price}}</td>
                     </tr>
                 </tbody>
             </table>
             <input type="submit" value="Submit Order" />
         </div>
         <div class="products col-md-6" ng-controller="ProductsController as products">
-            @Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products)
+            {{ products.list = @{ Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products); } }}
+            <ul>
+                <li ng-repeat="(key, value) in products.list">
+                    {{ value.Name }}
+                </li>
+            </ul>
         </div>
     </div>
     <div class="row">
