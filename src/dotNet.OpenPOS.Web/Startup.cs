@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using dotNet.OpenPOS.Repositories.Interfaces;
 using dotNet.OpenPOS.Repositories.Concrete;
+using dotNet.OpenPOS.Services.Interfaces;
+using dotNet.OpenPOS.Services.Concrete;
 
 namespace dotNet.OpenPOS.Web
 {
@@ -36,6 +38,8 @@ namespace dotNet.OpenPOS.Web
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IInventoryService, InventoryService>();
+            services.AddTransient<IOrderService, OrderService>();
 
 
             // Add framework services.

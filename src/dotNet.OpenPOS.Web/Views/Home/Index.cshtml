@@ -4,7 +4,14 @@
 }
 
 <div id="container-pos">
-
+    <div class="row">
+        <section ng-init="tab = 1">
+            <ul class="nav nav-pills">
+                <li><a href ng-click="tab = 1">Products</a></li>
+                <li><a href ng-click="tab = 2">Orders</a></li>
+            </ul>
+        </section>
+    </div>
     <div class="row">
         <div class="order col-md-6" ng-controller="OrdersController as orders">
             <table>
@@ -37,17 +44,18 @@
             </table>
             <input type="submit" value="Submit Order" />
         </div>
-        <div class="products col-md-6" ng-controller="ProductsController as products">
-            {{ products.list = @{ Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products); } }}
+        <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
+            <h2>Products</h2>
             <ul>
-                <li ng-repeat="(key, value) in products.list">
-                    {{ value.Name }}
-                </li>
+                @*@foreach (var p in Model.Products)
+                    {
+                        <li>
+                        </li>
+                    }*@
             </ul>
+
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" ng-show="tab == 2">
             <h2>Last Daily Orders</h2>
             <ul>
                 @foreach (var o in Model.LastDailyOrders)
@@ -56,12 +64,18 @@
                 }
             </ul>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Calculator</h2>
+
+        </div>
         <div class="col-md-6">
             <h2>Top sales products</h2>
             <ul>
-                @foreach (var p in Model.TopProducts)
+                @foreach (var p in Model.TopProducts.Select((value, i) => new { i, value }))
                 {
-                    <li>@p.Name - @p.Sales</li>
+                    <li>@p.i: @p.value.Name - @p.value.Sales</li>
                 }
             </ul>
         </div>
