@@ -1,12 +1,7 @@
-﻿using dotNet.OpenPOS.Domain.Models;
-using dotNet.OpenPOS.Repositories.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System.Linq;
 using dotNet.OpenPOS.Web.Models;
 using dotNet.OpenPOS.Services.Interfaces;
-using System.Reflection;
 
 namespace dotNet.OpenPOS.Web.Controllers
 {
@@ -41,7 +36,7 @@ namespace dotNet.OpenPOS.Web.Controllers
         {
             var version = Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion;
             var description = "Your application description page.";
-            var license = "This software is under MIT License";
+            var license = "This software is under MIT License.";
             var credits = "Copyright (c) 2016 Roger Calaf";
 
             return Json(new { Description = description, License = license, Credits = credits, Version = version });
