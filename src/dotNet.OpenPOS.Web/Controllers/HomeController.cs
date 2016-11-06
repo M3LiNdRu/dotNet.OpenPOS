@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using dotNet.OpenPOS.Web.Models;
 using dotNet.OpenPOS.Services.Interfaces;
+using System.Reflection;
 
 namespace dotNet.OpenPOS.Web.Controllers
 {
@@ -31,11 +32,19 @@ namespace dotNet.OpenPOS.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Initialize()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> About()
         {
-            ViewData["Message"] = "Your application description page.";
+            var version = Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion;
+            var description = "Your application description page.";
+            var license = "This software is under MIT License";
+            var credits = "Copyright (c) 2016 Roger Calaf";
 
-            return View();
+            return Json(new { Description = description, License = license, Credits = credits, Version = version });
         }
 
         public async Task<IActionResult> Error()

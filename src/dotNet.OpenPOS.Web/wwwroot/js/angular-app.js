@@ -21,4 +21,10 @@
         };
     });
 
+    app.controller("AboutController", function ($scope, $http) {
+        $http.get("Home/About").then(function (response) {
+            $scope.aboutInfo = response.data;
+        });
+    });
+
 })();

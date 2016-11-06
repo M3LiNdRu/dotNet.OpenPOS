@@ -24,8 +24,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
+                    <li data-toggle="modal" data-target="#About"><a href>About</a></li>
                 </ul>
             </div>
         </div>
@@ -35,6 +35,28 @@
     </div>
     <div class="panel-footer">
         <footer></footer>
+    </div>
+
+    <!-- Modal About -->
+    <div id="About" class="modal fade" role="dialog" ng-controller="AboutController as about">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">@ViewData["Title"]</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{aboutInfo.description}}</p><br />
+                    <p>{{aboutInfo.license}}</p>
+                    <p>{{aboutInfo.credits}}</p>
+                </div>
+                <div class="modal-footer">
+                    <span>App Version: {{aboutInfo.version}}</span>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <environment names="Development">
