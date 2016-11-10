@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body>
+<body ng-controller="AboutController as about">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -25,7 +25,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
-                    <li data-toggle="modal" data-target="#About"><a href>About</a></li>
+                    <li data-toggle="modal" data-target="#About" ng-click="about.getAboutInfo()"><a href>About</a></li>
                 </ul>
             </div>
         </div>
@@ -38,7 +38,7 @@
     </div>
 
     <!-- Modal About -->
-    <div id="About" class="modal fade" role="dialog" ng-controller="AboutController as about">
+    <div id="About" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -47,12 +47,12 @@
                     <h4 class="modal-title">@ViewData["Title"]</h4>
                 </div>
                 <div class="modal-body">
-                    <p>{{aboutInfo.description}}</p><br />
-                    <p>{{aboutInfo.license}}</p>
-                    <p>{{aboutInfo.credits}}</p>
+                    <p>{{about.aboutInfo.description}}</p><br />
+                    <p>{{about.aboutInfo.license}}</p>
+                    <p>{{about.aboutInfo.credits}}</p>
                 </div>
                 <div class="modal-footer">
-                    <span>App Version: {{aboutInfo.version}}</span>
+                    <span>App Version: {{about.aboutInfo.version}}</span>
                 </div>
             </div>
 

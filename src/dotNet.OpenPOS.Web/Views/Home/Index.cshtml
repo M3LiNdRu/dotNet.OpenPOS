@@ -17,7 +17,13 @@
             <table>
                 <thead>
                     <tr>
-                        <th>{{orders.currentOrder.Name}}</th>
+                        <th>
+                            <div ng-show="editing">
+                                <input type="text" class="form-control" ng-model="orders.currentOrder.Name"> 
+                                <span class="glyphicon glyphicon-ok" ng-click="editing = false"></span>
+                            </div>                     
+                            <span ng-hide="editing" ng-click="editing = true">{{orders.currentOrder.Name}}</span>
+                        </th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -42,10 +48,9 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="Submit Order" />
+            <input type="submit" value="Submit Order" ng-click="orders.createOrder()"/>
         </div>
         <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
-            <h2>Products</h2>
             <ul>
                 @*@foreach (var p in Model.Products)
                     {
@@ -56,7 +61,6 @@
 
         </div>
         <div class="col-md-6" ng-show="tab == 2">
-            <h2>Last Daily Orders</h2>
             <ul>
                 @foreach (var o in Model.LastDailyOrders)
                 {
@@ -70,7 +74,7 @@
             <h2>Calculator</h2>
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" ng-controller="ProductsController as products">
             <h2>Top sales products</h2>
             <ul>
                 @foreach (var p in Model.TopProducts.Select((value, i) => new { i, value }))
@@ -78,6 +82,7 @@
                     <li>@p.i: @p.value.Name - @p.value.Sales</li>
                 }
             </ul>
+            <p>Last update: {{ products.randomNumber }}</p>
         </div>
     </div>
 </div>

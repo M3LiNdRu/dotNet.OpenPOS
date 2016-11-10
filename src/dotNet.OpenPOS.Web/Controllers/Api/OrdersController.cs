@@ -33,7 +33,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
             return new BaseResponse(true, model, "GetById");
         }
 
-        // POST api/values
+        // POST api/orders
         [HttpPost]
         public async Task<BaseResponse> Post([FromBody]Order value)
         {
