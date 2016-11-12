@@ -18,6 +18,11 @@ namespace dotNet.OpenPOS.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //TODO: Check if its first connection
+            var itsFirstConnection = true;
+            if (itsFirstConnection)
+                return RedirectToAction("Initialize");
+
             var model = new HomeViewModel();
 
             model.Products = await _inventoryService.GetInventoryAsync();
@@ -29,7 +34,8 @@ namespace dotNet.OpenPOS.Web.Controllers
 
         public async Task<IActionResult> Initialize()
         {
-            return View();
+            var model = new InitializeViewModel();
+            return View(model);
         }
 
         public async Task<IActionResult> About()
