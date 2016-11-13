@@ -4,45 +4,77 @@
 }
 
 <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Init">Open Modal</button>
+@*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Init">Open Modal</button>*@
 
 <!-- Modal Init Config -->
-<div id="Init" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+<div id="Init" class="modal fade in" role="dialog">
+    <div class="modal-dialog" ng-controller="InitialConfigController as configCtrl">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                <!--  <button type="button" class="close" data-dismiss="modal">&times;</button>-->
                 <h4 class="modal-title">@ViewData["Title"]</h4>
             </div>
-            <div class="modal-body">
-                <section ng-init="tab = 1">
-                    <ul class="nav nav-pills">
-                        <li><a href ng-click="tab = 1">1</a></li>
-                        <li><a href ng-click="tab = 2">2</a></li>
-                        <li><a href ng-click="tab = 3">3</a></li>
-                        <li><a href ng-click="tab = 4">4</a></li>
-                        <li><a href ng-click="tab = 5">5</a></li>
+            <div class="modal-body board">
+                <section class="board-inner" ng-init="tab = 1">
+                    <ul class="nav nav-tabs">
+                        <div class="liner"></div>
+                        <li class="active"><a href ng-click="tab = 1"><span class="round-tabs one"><i class="icon">1</i></span></a></li>
+                        <li><a href ng-click="tab = 2"><span class="round-tabs two"><i class="icon">2</i></span></a></li>
+                        <li><a href ng-click="tab = 3"><span class="round-tabs three"><i class="icon">3</i></span></a></li>
+                        <li><a href ng-click="tab = 4"><span class="round-tabs four"><i class="icon">4</i></span></a></li>
+                        <li><a href ng-click="tab = 5"><span class="round-tabs five"><i class="icon">5</i></span></a></li>
                     </ul>
                 </section>
                 <div class="step-one" ng-show="tab == 1">
-                    <h2>Set Database Configuration</h2>
+                    <h4>Set Database Configuration</h4>
+                    <hr/>
+                    <form name="dbConfigForm" ng-submit="configCtrl.addDbConfig()">
+                        <div class="form-group">
+                            <label for="serverName">Server Address</label>
+                            <input id="serverName" ng-model="configCtrl.dbConfig.ServerName" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="port">Port</label>
+                            <input id="port" ng-model="configCtrl.dbConfig.Port" type="number" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="userName">UserName</label>
+                            <input id="userName" ng-model="configCtrl.dbConfig.UserName" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" ng-model="configCtrl.dbConfig.Password" type="password" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="databaseName">Database Name</label>
+                            <input id="databaseName" ng-model="configCtrl.dbConfig.DatabaseName" type="text" class="form-control" />
+                        </div>                                               
+                        <button ng-click="configCtrl.testConfig()"class="btn btn-info">Test Connection</button>
+                        <button type="reset" class="btn btn-warning">Reset Values</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
                 </div>
                 <div class="step-two" ng-show="tab == 2">
-                    <h2>Set Account Configuration</h2>
+                    <h4>Set Account Configuration</h4>
+                    <hr />
                 </div>
                 <div class="step-three" ng-show="tab == 3">
-                    <h2>Set Step 3</h2>
+                    <h4>Set Step 3</h4>
+                    <hr />
                 </div>
                 <div class="step-four" ng-show="tab == 4">
-                    <h2>Set Step 4</h2>
+                    <h4>Set Step 4</h4>
+                    <hr />
                 </div>
                 <div class="step-five" ng-show="tab == 5">
-                    <h2>You did it! It's ready to start :)</h2>
+                    <h4>You did it! It's ready to start :)</h4>
+                    <hr />
                 </div>
             </div>
             <div class="modal-footer" ng-click="tab = tab + 1">
-                <a href>Next Step</a>
+                <a href ng-show="tab <= 4">Next Step</a>
+                <a href ng-show="tab >= 5" ng-click="goMainPage()">Close</a>
             </div>
         </div>
 

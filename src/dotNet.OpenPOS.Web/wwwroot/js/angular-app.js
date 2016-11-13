@@ -52,4 +52,26 @@
         });
     });
 
+    app.controller('InitialConfigController', function($location) {
+        this.dbConfig = {
+            ServerName: "http://",
+            Port: 1433,
+            UserName: "UserName",
+            Password: "Password",
+            DatabaseName: "openPOS"
+        };
+
+        this.testConfig = function () {
+            console.log(this.dbConfig);
+        };
+
+        this.addDbConfig = function () {
+            console.log(this.dbConfig);
+        };
+
+        this.goMainPage = function() {
+            $location.href("/Home");
+        };
+    });
+
 })();
