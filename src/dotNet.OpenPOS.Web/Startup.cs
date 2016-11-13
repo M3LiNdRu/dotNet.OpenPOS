@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +7,7 @@ using dotNet.OpenPOS.Repositories.Interfaces;
 using dotNet.OpenPOS.Repositories.Concrete;
 using dotNet.OpenPOS.Services.Interfaces;
 using dotNet.OpenPOS.Services.Concrete;
+using dotNet.OpenPOS.Web.Models;
 
 namespace dotNet.OpenPOS.Web
 {
@@ -31,6 +28,12 @@ namespace dotNet.OpenPOS.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Setup options with DI
+            services.AddOptions();
+
+            // Configure MyOptions using config by installing Microsoft.Extensions.Options.ConfigurationExtensions
+            services.Configure<ApplicationConfigurationOptions>(Configuration);
+
             //Add own services.
             services.AddSingleton<IDatabaseContext, InMemoryDatabaseContext>();
             services.AddTransient<IProductFamilyRepository, ProductFamilyRepository>();
@@ -40,6 +43,7 @@ namespace dotNet.OpenPOS.Web
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IInventoryService, InventoryService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IAccountService, AccountService>();
 
 
             // Add framework services.

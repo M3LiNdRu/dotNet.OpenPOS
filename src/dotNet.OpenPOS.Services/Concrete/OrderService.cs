@@ -17,9 +17,9 @@ namespace dotNet.OpenPOS.Services.Concrete
             _orderRepository = orderRepository;
         }
 
-        public Task<IEnumerable<Order>> GetDailyOrders()
+        public async Task<IEnumerable<Order>> GetDailyOrdersAsync()
         {
-            return _orderRepository.GetDailyOrders();
+            return await _orderRepository.GetDailyOrders();
         }
     }
 }

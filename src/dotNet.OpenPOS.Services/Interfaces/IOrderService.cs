@@ -8,6 +8,6 @@ namespace dotNet.OpenPOS.Services.Interfaces
 {
     public interface IOrderService
     {
-        Task<IEnumerable<Order>> GetDailyOrders();
+        Task<IEnumerable<Order>> GetDailyOrdersAsync();
     }
 }

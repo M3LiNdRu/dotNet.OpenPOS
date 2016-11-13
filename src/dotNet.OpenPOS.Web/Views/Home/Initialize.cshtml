@@ -26,17 +26,17 @@
                         <li><a href ng-click="tab = 5"><span class="round-tabs five"><i class="icon">5</i></span></a></li>
                     </ul>
                 </section>
-                <div class="step-one" ng-show="tab == 1">
-                    <h4>Set Database Configuration</h4>
+                <div class="step-one active" ng-show="tab == 1">
+                    <h4>1. Set Database Configuration</h4>
                     <hr/>
                     <form name="dbConfigForm" ng-submit="configCtrl.addDbConfig()">
                         <div class="form-group">
                             <label for="serverName">Server Address</label>
-                            <input id="serverName" ng-model="configCtrl.dbConfig.ServerName" type="text" class="form-control" />
+                            <input id="serverName" ng-model="configCtrl.dbConfig.ServerName" type="text" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="port">Port</label>
-                            <input id="port" ng-model="configCtrl.dbConfig.Port" type="number" class="form-control" />
+                            <input id="port" ng-model="configCtrl.dbConfig.Port" type="number" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="userName">UserName</label>
@@ -48,27 +48,27 @@
                         </div>
                         <div class="form-group">
                             <label for="databaseName">Database Name</label>
-                            <input id="databaseName" ng-model="configCtrl.dbConfig.DatabaseName" type="text" class="form-control" />
+                            <input id="databaseName" ng-model="configCtrl.dbConfig.DatabaseName" type="text" class="form-control" required/>
                         </div>                                               
                         <button ng-click="configCtrl.testConfig()"class="btn btn-info">Test Connection</button>
                         <button type="reset" class="btn btn-warning">Reset Values</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button><span ng-show="configCtrl.addDbConfigResponse" class="glyphicon glyphicon-saved"></span>
                     </form>
                 </div>
                 <div class="step-two" ng-show="tab == 2">
-                    <h4>Set Account Configuration</h4>
+                    <h4>2. Set Account Configuration</h4>
                     <hr />
                 </div>
                 <div class="step-three" ng-show="tab == 3">
-                    <h4>Set Step 3</h4>
+                    <h4>3. Set Step 3</h4>
                     <hr />
                 </div>
                 <div class="step-four" ng-show="tab == 4">
-                    <h4>Set Step 4</h4>
+                    <h4>4. Set Step 4</h4>
                     <hr />
                 </div>
                 <div class="step-five" ng-show="tab == 5">
-                    <h4>You did it! It's ready to start :)</h4>
+                    <h4>5. You did it! It's ready to start :)</h4>
                     <hr />
                 </div>
             </div>

@@ -6,7 +6,6 @@ using dotNet.OpenPOS.Web.Models;
 using dotNet.OpenPOS.Repositories.Interfaces;
 using dotNet.OpenPOS.Domain.Models;
 
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace dotNet.OpenPOS.Web.Controllers.Api
 {

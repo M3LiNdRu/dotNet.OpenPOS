@@ -26,7 +26,7 @@ namespace dotNet.OpenPOS.Web.Controllers
             var model = new HomeViewModel();
 
             model.Products = await _inventoryService.GetInventoryAsync();
-            model.LastDailyOrders = await _orderService.GetDailyOrders();
+            model.LastDailyOrders = await _orderService.GetDailyOrdersAsync();
             model.TopProducts = await _inventoryService.GetTopProductsAsync(5);
 
             return View(model);

@@ -1,6 +1,8 @@
 ﻿(function () {
-    var app = angular.module("openPOS", []);
-
+    var app = angular.module("openPOS", []).config(function ($locationProvider) {
+        $locationProvider.html5Mode(true);
+    });
+    
     app.controller("ProductsController", function () {
         var ctx = this;
 
@@ -53,7 +55,10 @@
     });
 
     app.controller('InitialConfigController', function($location) {
-        this.dbConfig = {
+        //TODO: Figure it out if there is another workaround
+        var ctx = this;
+
+        ctx.dbConfig = {
             ServerName: "http://",
             Port: 1433,
             UserName: "UserName",
@@ -61,15 +66,20 @@
             DatabaseName: "openPOS"
         };
 
-        this.testConfig = function () {
-            console.log(this.dbConfig);
+        ctx.addDbConfigResponse = false;
+
+        ctx.testConfig = function () {
+            console.log(ctx.dbConfig);
         };
 
-        this.addDbConfig = function () {
-            console.log(this.dbConfig);
+        ctx.addDbConfig = function () {
+            console.log(ctx.dbConfig);
+            //$http.post("api/InitialConfigurationController/dbconfiguration").then(function (response) {
+            //    ctx.addDbConfigResponse = response.data;
+            //});
         };
 
-        this.goMainPage = function() {
+        ctx.goMainPage = function() {
             $location.href("/Home");
         };
     });
