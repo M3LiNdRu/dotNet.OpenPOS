@@ -14,12 +14,12 @@
     </div>
     <div class="row">
         <div class="order col-md-6" ng-controller="OrdersController as orders">
-            <table>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>
-                            <div ng-show="editing">
-                                <input type="text" class="form-control" ng-model="orders.currentOrder.Name"> 
+                            <div ng-show="editing" ng-cloak>
+                                <input style="display:inline-block;" type="text" class="form-control" ng-model="orders.currentOrder.Name"> 
                                 <span class="glyphicon glyphicon-ok" ng-click="editing = false"></span>
                             </div>                     
                             <span ng-hide="editing" ng-click="editing = true">{{orders.currentOrder.Name}}</span>
@@ -48,7 +48,8 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="Submit Order" ng-click="orders.createOrder()"/>
+            <button class="btn btn-success" ng-click="orders.create()">Submit</button>
+            <button class="btn btn-warning" ng-click="orders.clear()">Clear</button>
         </div>
         <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
             <ul>

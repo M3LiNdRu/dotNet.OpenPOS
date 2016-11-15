@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using dotNet.OpenPOS.Web.Models;
 using dotNet.OpenPOS.Services.Interfaces;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace dotNet.OpenPOS.Web.Controllers
 {
@@ -9,17 +11,22 @@ namespace dotNet.OpenPOS.Web.Controllers
     {
         private readonly IInventoryService _inventoryService;
         private readonly IOrderService _orderService;
+        private readonly IOptions<AppSettings> _optionsAccessor;
+        private readonly IConfigurationRoot _configuration;
 
-        public HomeController(IInventoryService inventoryService,IOrderService orderService)
+        public HomeController(IInventoryService inventoryService,IOrderService orderService,
+            IOptions<AppSettings> optionsAccessor, IConfigurationRoot configuration)
         {
             _inventoryService = inventoryService;
             _orderService = orderService;
+            _optionsAccessor = optionsAccessor;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
         {
             //TODO: Check if its first connection
-            var itsFirstConnection = true;
+            var itsFirstConnection = false; // _configuration.GetConnectionString("DefaultConnection") == string.Empty;
             if (itsFirstConnection)
                 return RedirectToAction("Initialize");
 

@@ -2,6 +2,7 @@
 using dotNet.OpenPOS.Services.Interfaces;
 using dotNet.OpenPOS.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
@@ -11,12 +12,12 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
     public class InitialConfigurationController : Controller
     {
         private readonly IAccountService _accountService;
-        private readonly IOptions<ApplicationConfigurationOptions> _optionsAccessor;
+        private readonly IConfigurationRoot _configuration;
 
-        public InitialConfigurationController(IAccountService accountService, IOptions<ApplicationConfigurationOptions> optionsAccessor)
+        public InitialConfigurationController(IAccountService accountService, IConfigurationRoot configuration)
         {
-            _optionsAccessor = optionsAccessor;
             _accountService = accountService;
+            _configuration = configuration;
         }
 
 
@@ -24,8 +25,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPost]
         public async Task<BaseResponse> PostDatabaseConfiguration([FromBody] DatabaseConnectionConfig config)
         {
-            _optionsAccessor.Value.ConnectionStrings["DefaultConnection"] = config.DataBaseName;
-
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
             return new BaseResponse(true, null, "PostDatabaseConfiguration");
         }
 

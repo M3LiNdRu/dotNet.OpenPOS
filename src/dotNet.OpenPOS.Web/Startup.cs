@@ -32,7 +32,9 @@ namespace dotNet.OpenPOS.Web
             services.AddOptions();
 
             // Configure MyOptions using config by installing Microsoft.Extensions.Options.ConfigurationExtensions
-            services.Configure<ApplicationConfigurationOptions>(Configuration);
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            services.AddSingleton<IConfigurationRoot>(Configuration);
 
             //Add own services.
             services.AddSingleton<IDatabaseContext, InMemoryDatabaseContext>();

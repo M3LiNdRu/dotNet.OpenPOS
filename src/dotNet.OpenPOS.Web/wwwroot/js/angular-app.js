@@ -33,13 +33,20 @@
             Total: 3
         };
 
-        ctx.createOrder = function () {
+        ctx.create = function () {
             $http.post("api/orders", ctx.currentOrder)
                 .then(function success(response) {
                     alert(response.data);
                 }, function error(response) {
                     alert(response.data);
                 });
+        };
+
+        ctx.clear = function () {
+            ctx.currentOrder.Products = {};
+            ctx.currentOrder.BaseTotal = 0;
+            ctx.currentOrder.TaxTotal = 0;
+            ctx.currentOrder.Total = 0;
         };
     });
 
