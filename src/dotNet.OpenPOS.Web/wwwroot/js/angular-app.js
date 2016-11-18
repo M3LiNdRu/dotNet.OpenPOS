@@ -8,11 +8,18 @@
 
         ctx.randomNumber = Math.floor((Math.random() * 100) + 1);
 
-        ctx.refreshTopProducts = function () {
-            ctx.randomNumber = Math.floor((Math.random() * 100) + 1);
+        ctx.load = function () {
+            var target = document.getElementById('product-data');
+            var products = target.attributes['data-content'].value;
+            console.log(products);
         };
 
-        setInterval(ctx.refreshTopProducts, 5000)
+        ctx.refreshTopProducts = function () {
+            ctx.randomNumber = Math.floor((Math.random() * 100) + 1);
+            setInterval(ctx.refreshTopProducts, 5000)
+        };
+
+        ctx.refreshTopProducts();
 
     });
 

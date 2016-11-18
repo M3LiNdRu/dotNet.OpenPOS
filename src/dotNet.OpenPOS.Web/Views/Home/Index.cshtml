@@ -52,6 +52,7 @@
             <button class="btn btn-warning" ng-click="orders.clear()">Clear</button>
         </div>
         <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
+            <span id="product-data" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products)"></span>
             <ul>
                 @*@foreach (var p in Model.Products)
                     {
@@ -59,7 +60,7 @@
                         </li>
                     }*@
             </ul>
-
+            <button class="btn btn-default" ng-click="products.load()">Load Products to Angular</button>
         </div>
         <div class="col-md-6" ng-show="tab == 2">
             <ul>
