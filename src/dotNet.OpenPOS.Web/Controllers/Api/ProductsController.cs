@@ -5,44 +5,34 @@ using Microsoft.AspNetCore.Mvc;
 using dotNet.OpenPOS.Web.Models;
 using dotNet.OpenPOS.Repositories.Interfaces;
 using dotNet.OpenPOS.Domain.Models;
-
+using dotNet.OpenPOS.Services.Interfaces;
 
 namespace dotNet.OpenPOS.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
-        private readonly IProductFamilyRepository _familiesRepo;
-        private readonly IProductRepository _productsRepo;
+        private readonly IInventoryService _inventoryService;
 
-        public ProductsController(IProductFamilyRepository familiesRepo, IProductRepository productsRepo)
+        public ProductsController(IInventoryService inventoryService)
         {
-            _familiesRepo = familiesRepo;
-            _productsRepo = productsRepo;
+            _inventoryService = inventoryService;
         }
 
         // GET: api/products
         [HttpGet]
         public async Task<BaseResponse> Get()
         {
-            var families = await _familiesRepo.GetAllAsync();
-            var products = await _productsRepo.GetAllAsync();
+            var inventory = await _inventoryService.GetInventoryAsync();
 
-            var model = new Dictionary<string, IEnumerable<Product>>();
-
-            foreach (var family in families)
-            {
-                model.Add(family.Name, products.Where(p => p.FamilyId == family.Id));
-            }
-
-            return new BaseResponse(true, model, "GetAll");
+            return new BaseResponse(true, inventory, "GetAll");
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<BaseResponse> Get(int id)
         {
-           var product = await _productsRepo.FindByIdAsync(id);
+           var product = await _inventoryService.GetProductAsync(id);
 
             return new BaseResponse(true, product, "GetById");
         }
@@ -52,7 +42,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         public async Task<BaseResponse> Post([FromBody]Product value)
         {
 
-            var inserted = await _productsRepo.InsertAsync(value);
+            var inserted = await _inventoryService.CreateProductAsync(value);
 
             return new BaseResponse(inserted, null, "Inserted");
         }
@@ -61,7 +51,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPut("{id}")]
         public async Task<BaseResponse> Put(int id, [FromBody]Product value)
         {
-            var updated = await _productsRepo.UpdateAsync(value);
+            var updated = await _inventoryService.EditProductAsync(value);
 
             return new BaseResponse(updated, null, "Updated");
         }
@@ -70,7 +60,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpDelete("{id}")]
         public async Task<BaseResponse> Delete(int id)
         {
-            var deleted = await _productsRepo.DeleteAsync(id);
+            var deleted = await _inventoryService.DeleteProductAsync(id);
 
             return new BaseResponse(deleted, null, "Deleted");
         }

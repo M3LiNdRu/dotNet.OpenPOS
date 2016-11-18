@@ -8,5 +8,9 @@ namespace dotNet.OpenPOS.Services.Interfaces
     {
         Task<Inventory> GetInventoryAsync();
         Task<IEnumerable<Product>> GetTopProductsAsync(int take);
+        Task<Product> GetProductAsync(int id);
+        Task<bool> CreateProductAsync(Product product);
+        Task<bool> EditProductAsync(Product product);
+        Task<bool> DeleteProductAsync(int id);
     }
 }

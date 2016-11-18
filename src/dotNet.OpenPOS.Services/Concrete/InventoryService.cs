@@ -37,5 +37,25 @@ namespace dotNet.OpenPOS.Services.Concrete
 
             return products.OrderBy(p => p.Sales).Take(take);
         }
+
+        public async Task<Product> GetProductAsync(int id)
+        {
+            return await _productRepository.FindByIdAsync(id);
+        }
+
+        public async Task<bool> CreateProductAsync(Product product)
+        {
+            return await _productRepository.InsertAsync(product);
+        }
+
+        public async Task<bool> EditProductAsync(Product product)
+        {
+            return await _productRepository.UpdateAsync(product);
+        }
+
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            return await _productRepository.DeleteAsync(id);
+        }
     }
 }
