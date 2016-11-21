@@ -1,27 +1,26 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using dotNet.OpenPOS.Web.Models;
-using dotNet.OpenPOS.Repositories.Interfaces;
 using dotNet.OpenPOS.Domain.Models;
+using dotNet.OpenPOS.Services.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace dotNet.OpenPOS.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     public class OrdersController : Controller
     {
-        private readonly IOrderRepository _orderRepo;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(IOrderRepository orderRepo)
+        public OrdersController(IOrderService orderRepo)
         {
-            _orderRepo = orderRepo;
+            _orderService = orderRepo;
         }
         // GET: api/values
         [HttpGet]
         public async Task<BaseResponse> Get()
         {
-            var model = await _orderRepo.GetAllAsync();
+            var model = await _orderService.GetAllOrdersAsync();
             return new BaseResponse(true, model, "GetAll");
         }
 
@@ -29,7 +28,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpGet("{id}")]
         public async Task<BaseResponse> Get(int id)
         {
-            var model = await _orderRepo.FindByIdAsync(id);
+            var model = await _orderService.GetOrderByIdAsync(id);
             return new BaseResponse(true, model, "GetById");
         }
 
@@ -37,7 +36,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPost]
         public async Task<BaseResponse> Post([FromBody]Order value)
         {
-            var inserted = await _orderRepo.InsertAsync(value);
+            var inserted = await _orderService.InsertOrderAsync(value);
             return new BaseResponse(inserted, null, "Inserted");
         }
 
@@ -45,7 +44,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPut("{id}")]
         public async Task<BaseResponse> Put(int id, [FromBody]Order value)
         {
-            var updated = await _orderRepo.UpdateAsync(value);
+            var updated = await _orderService.UpdateOrderAsync(value);
             return new BaseResponse(updated, null, "Updated");
         }
 
@@ -53,7 +52,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpDelete("{id}")]
         public async Task<BaseResponse> Delete(int id)
         {
-            var deleted = await _orderRepo.DeleteAsync(id);
+            var deleted = await _orderService.DeleteOrderAsync(id);
             return new BaseResponse(deleted, null, "Deleted");
         }
     }

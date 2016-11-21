@@ -3,26 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using dotNet.OpenPOS.Web.Models;
 using dotNet.OpenPOS.Repositories.Interfaces;
 using dotNet.OpenPOS.Domain.Models;
-
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+using dotNet.OpenPOS.Services.Interfaces;
 
 namespace dotNet.OpenPOS.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     public class PaymentsController : Controller
     {
-        private readonly IPaymentRepository _paymentRepo;
+        private readonly IPaymentService _paymentService;
 
-        public PaymentsController(IPaymentRepository paymentRepo)
+        public PaymentsController(IPaymentService paymentService)
         {
-            _paymentRepo = paymentRepo;
+            _paymentService = paymentService;
         }
 
         // GET: api/values
         [HttpGet]
         public async Task<BaseResponse> Get()
         {
-            var model = await _paymentRepo.GetAllAsync();
+            var model = await _paymentService.GetAllPaymentsAsync();
             return new BaseResponse(true, model, "GetAll");
         }
 
@@ -30,7 +29,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpGet("{id}")]
         public async Task<BaseResponse> Get(int id)
         {
-            var model = await _paymentRepo.FindByIdAsync(id);
+            var model = await _paymentService.FindPaymentsByOrderIdAsync(id);
             return new BaseResponse(true, model, "GetById");
         }
 
@@ -38,7 +37,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPost]
         public async Task<BaseResponse> Post([FromBody]Payment value)
         {
-            var inserted = await _paymentRepo.InsertAsync(value);
+            var inserted = await _paymentService.InsertPaymentAsync(value);
             return new BaseResponse(inserted, null, "Inserted");
         }
 
@@ -46,7 +45,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPut("{id}")]
         public async Task<BaseResponse> Put(int id, [FromBody]Payment value)
         {
-            var updated = await _paymentRepo.UpdateAsync(value);
+            var updated = await _paymentService.UpdatePaymentAsync(value);
             return new BaseResponse(updated, null, "Updated");
         }
 
@@ -54,7 +53,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpDelete("{id}")]
         public async Task<BaseResponse> Delete(int id)
         {
-            var deleted = await _paymentRepo.DeleteAsync(id);
+            var deleted = await _paymentService.DeletePaymentAsync(id);
             return new BaseResponse(deleted, null, "Deleted");
         }
     }

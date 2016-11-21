@@ -1,7 +1,5 @@
 ﻿using dotNet.OpenPOS.Domain.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace dotNet.OpenPOS.Services.Interfaces
@@ -9,5 +7,12 @@ namespace dotNet.OpenPOS.Services.Interfaces
     public interface IOrderService
     {
         Task<IEnumerable<Order>> GetDailyOrdersAsync();
+        Task<IEnumerable<Order>> GetAllOrdersAsync();
+
+        Task<Order> GetOrderByIdAsync(int id);
+        Task<bool> InsertOrderAsync(Order intenty);
+        Task<bool> UpdateOrderAsync(Order identity);
+        Task<bool> DeleteOrderAsync(int id);
+
     }
 }
