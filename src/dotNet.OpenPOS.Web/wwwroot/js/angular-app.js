@@ -6,22 +6,25 @@
     app.controller("ProductsController", function () {
         var ctx = this;
 
-        ctx.familyProducts = [];
+        ctx.inventory = {};
         ctx.randomNumber = Math.floor((Math.random() * 100) + 1);
-
-        ctx.loadProducts = function (index) {
-            ctx.familyProducts = ctx.inventory.ProductFamilies[index].Products;
-        };
-
+        ctx.fullInventory = {};
+        
         ctx.loadInventory = function () {
             var target = document.getElementById('inventory-data');
-            ctx.inventory = target.attributes['data-content'].value;
+            ctx.fullInventory = target.attributes['data-content'].value;
+            ctx.inventory = JSON.parse(ctx.fullInventory);
             console.log(ctx.inventory);
         };
 
         ctx.refreshTopProducts = function () {
             ctx.randomNumber = Math.floor((Math.random() * 100) + 1);
             setInterval(ctx.refreshTopProducts, 5000)
+        };
+
+        ctx.loadProductFamily = function (index) {
+            ctx.inventory = ctx.inventory.ProductFamilies[index];
+            
         };
 
         ctx.refreshTopProducts();

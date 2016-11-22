@@ -54,10 +54,10 @@
         <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
             <input id="inventory-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products)" />
             <div>
-                @foreach (var p in Model.Products.ProductFamilies)
-                {
-                    <span class="tag tag-default" ng-click="products.loadProducts(@p.Id)"> @p.FamilyName<text> - (</text>@p.Products.Count()) </span>
-                }
+                <button class="btn btn-default" ng-click="products.loadProductFamily(0)">Refresh</button>
+                <span class="tag tag-default" ng-repeat="(key, value) in products.inventory.ProductFamilies">
+                    <span ng-click="products.loadProductFamily(value.Id)">{{value.FamilyName}} - ({{value.Products.length}})</span>
+                </span>             
             </div>
             <div>
                 <table class="table table-striped">
@@ -69,7 +69,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="(key, value) in products.familyProducts">
+                        <tr ng-repeat="(key, value) in products.inventory.Products">
                             <td>{{value.Name}}</td>
                             <td></td>
                             <td>{{value.Price}}</td>
