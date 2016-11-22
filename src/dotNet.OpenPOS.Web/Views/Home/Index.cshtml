@@ -52,15 +52,31 @@
             <button class="btn btn-warning" ng-click="orders.clear()">Clear</button>
         </div>
         <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
-            <input id="product-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products)" />
-            <ul>
-                @*@foreach (var p in Model.Products)
-                    {
-                        <li>
-                        </li>
-                    }*@
-            </ul>
-            <button class="btn btn-default" ng-click="products.load()">Load Products to Angular</button>
+            <input id="inventory-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products)" />
+            <div>
+                @foreach (var p in Model.Products.ProductFamilies)
+                {
+                    <span class="tag tag-default" ng-click="products.loadProducts(@p.Id)"> @p.FamilyName<text> - (</text>@p.Products.Count()) </span>
+                }
+            </div>
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(key, value) in products.familyProducts">
+                            <td>{{value.Name}}</td>
+                            <td></td>
+                            <td>{{value.Price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-md-6" ng-show="tab == 2">
             <ul>

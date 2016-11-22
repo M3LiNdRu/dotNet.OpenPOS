@@ -6,12 +6,17 @@
     app.controller("ProductsController", function () {
         var ctx = this;
 
+        ctx.familyProducts = [];
         ctx.randomNumber = Math.floor((Math.random() * 100) + 1);
 
-        ctx.load = function () {
-            var target = document.getElementById('product-data');
-            var products = target.attributes['data-content'].value;
-            console.log(products);
+        ctx.loadProducts = function (index) {
+            ctx.familyProducts = ctx.inventory.ProductFamilies[index].Products;
+        };
+
+        ctx.loadInventory = function () {
+            var target = document.getElementById('inventory-data');
+            ctx.inventory = target.attributes['data-content'].value;
+            console.log(ctx.inventory);
         };
 
         ctx.refreshTopProducts = function () {
@@ -20,6 +25,7 @@
         };
 
         ctx.refreshTopProducts();
+        ctx.loadInventory();
 
     });
 
