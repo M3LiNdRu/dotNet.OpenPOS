@@ -6,14 +6,14 @@
     app.controller("ProductsController", function () {
         var ctx = this;
 
+        ctx.inventories = [];
         ctx.inventory = {};
         ctx.randomNumber = Math.floor((Math.random() * 100) + 1);
-        ctx.fullInventory = {};
         
         ctx.loadInventory = function () {
             var target = document.getElementById('inventory-data');
-            ctx.fullInventory = target.attributes['data-content'].value;
-            ctx.inventory = JSON.parse(ctx.fullInventory);
+            var fullInventory = target.attributes['data-content'].value;
+            ctx.inventory = JSON.parse(fullInventory);
             console.log(ctx.inventory);
         };
 
@@ -22,9 +22,13 @@
             setInterval(ctx.refreshTopProducts, 5000)
         };
 
+        ctx.backproductFamily = function () {
+            ctx.inventory = ctx.inventories.pop();
+        }
+
         ctx.loadProductFamily = function (index) {
+            ctx.inventories.push(ctx.inventory);
             ctx.inventory = ctx.inventory.ProductFamilies[index];
-            
         };
 
         ctx.refreshTopProducts();
@@ -48,6 +52,10 @@
             TaxTotal: 0.25,
             Total: 3
         };
+
+        ctx.addProduct = function (product) {
+            console.log("Added Product to Cart", product);
+        }
 
         ctx.create = function () {
             $http.post("api/orders", ctx.currentOrder)
