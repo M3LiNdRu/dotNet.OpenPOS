@@ -54,7 +54,33 @@
         };
 
         ctx.addProduct = function (product) {
-            console.log("Added Product to Cart", product);
+            console.log("Added Product to Cart", product);            
+            var result = $.grep(ctx.currentOrder.Products, function (e) { return e.Id == product.Id; });
+            if (result.length == 0) {
+                var newproduct = { Id: product.Id, Name: product.Name, Quantity: 1, Price: product.Price };
+                ctx.currentOrder.Products.push(newproduct);
+                ctx.currentOrder.Total += product.Price;
+                ctx.currentOrder.TaxTotal += product.Tax;
+                ctx.currentOrder.BaseTotal += product.BasePrice;
+            }
+            else {
+                ctx.currentOrder.Products.forEach(
+                    function (item) {
+                        if (item.Id == product.Id)
+                        {
+                            item.Quantity++;
+                            item.Price = item.Quantity * item.Price;
+                            ctx.currentOrder.Total += product.Price;
+                            ctx.currentOrder.TaxTotal += product.Tax;
+                            ctx.currentOrder.BaseTotal += product.BasePrice;
+                        }
+                            
+                });
+            }
+        }
+
+        ctx.removeProduct = function (index) {
+            ctx.currentOrder.Products.splice(index, 1); 
         }
 
         ctx.create = function () {
@@ -67,7 +93,7 @@
         };
 
         ctx.clear = function () {
-            ctx.currentOrder.Products = {};
+            ctx.currentOrder.Products = [];
             ctx.currentOrder.BaseTotal = 0;
             ctx.currentOrder.TaxTotal = 0;
             ctx.currentOrder.Total = 0;
