@@ -4,21 +4,21 @@
 }
 
 <div id="container-pos">
-    <div class="row">
-        <section ng-init="tab = 1">
-            <ul class="nav nav-pills">
+    <div class="row">      
+    </div>
+    <div class="row" ng-controller="OrdersController as orders">
+        <section class="col-lg-10" ng-init="tab = 1">
+            <ul class="nav nav-pills" style="float:right;">
                 <li><a href ng-click="tab = 1">Products</a></li>
                 <li><a href ng-click="tab = 2">Orders</a></li>
             </ul>
         </section>
-    </div>
-    <div class="row" ng-controller="OrdersController as orders">
         <div class="order col-md-6" >
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>
-                            <div ng-show="editing" ng-cloak>
+                            <div ng-show="editing" class="form-inline">
                                 <input style="display:inline-block;" type="text" class="form-control" ng-model="orders.currentOrder.Name"> 
                                 <span class="glyphicon glyphicon-ok" ng-click="editing = false"></span>
                             </div>                     
@@ -29,10 +29,10 @@
                         <th></th>
                     </tr>
                     <tr>
+                        <th></th>
                         <th>Name</th>
                         <th>Quantity</th>
-                        <th>Price</th>
-                        <th></th>
+                        <th>Price</th>                      
                     </tr>
                 </thead>
                 <tfoot>
@@ -45,10 +45,10 @@
                 </tfoot>
                 <tbody>
                     <tr ng-repeat="(key, value) in orders.currentOrder.Products">
+                        <td><span class="glyphicon glyphicon-remove" ng-click="orders.removeProduct(key)"></span></td>
                         <td>{{value.Name}}</td>
                         <td>{{value.Quantity}}</td>
-                        <td>{{value.Price}}</td>
-                        <td><span class="glyphicon glyphicon-remove" ng-click="orders.removeProduct(key)"></span></td>
+                        <td>{{value.Price}}</td>                     
                     </tr>
                 </tbody>
             </table>

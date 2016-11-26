@@ -43,25 +43,18 @@
         ctx.currentOrder = {
             Name: 'NewOrder',
             Reference: 'NewOrder-00',
-            Products: [
-                { Id: 0, Name: "Coca Cola", Quantity: 1, Price: 1.10 },
-                { Id: 3, Name: "Pipes Bossa", Quantity: 1, Price: 1.10 },
-                { Id: 5, Name: "CERVESA MORITZ", Quantity: 1, Price: 1.30 }
-            ],
-            BaseTotal: 2.75,
-            TaxTotal: 0.25,
-            Total: 3
+            Products: [ ],
+            BaseTotal: 0,
+            TaxTotal: 0,
+            Total: 0
         };
 
         ctx.addProduct = function (product) {
             console.log("Added Product to Cart", product);            
             var result = $.grep(ctx.currentOrder.Products, function (e) { return e.Id == product.Id; });
             if (result.length == 0) {
-                var newproduct = { Id: product.Id, Name: product.Name, Quantity: 1, Price: product.Price };
+                var newproduct = { Id: product.Id, Name: product.Name, Quantity: 1, Price: product.Price, Tax: product.Tax, Base: product.BasePrice };
                 ctx.currentOrder.Products.push(newproduct);
-                ctx.currentOrder.Total += product.Price;
-                ctx.currentOrder.TaxTotal += product.Tax;
-                ctx.currentOrder.BaseTotal += product.BasePrice;
             }
             else {
                 ctx.currentOrder.Products.forEach(
@@ -69,22 +62,31 @@
                         if (item.Id == product.Id)
                         {
                             item.Quantity++;
-                            item.Price = item.Quantity * item.Price;
-                            ctx.currentOrder.Total += product.Price;
-                            ctx.currentOrder.TaxTotal += product.Tax;
-                            ctx.currentOrder.BaseTotal += product.BasePrice;
-                        }
-                            
-                });
+                            item.Price = item.Quantity * item.Price;                           
+                        }                            
+                });            
             }
+
+            ctx.updateOrderTotals();
         }
 
         ctx.removeProduct = function (index) {
+            console.log("Removed Product from Cart", index);
             ctx.currentOrder.Products.splice(index, 1); 
+            ctx.updateOrderTotals();
         }
 
         ctx.create = function () {
             $http.post("api/orders", ctx.currentOrder)
+                .then(function success(response) {
+                    alert(response.data);
+                }, function error(response) {
+                    alert(response.data);
+                });
+        };
+
+        ctx.update = function () {
+            $http.put("api/orders", ctx.currentOrder)
                 .then(function success(response) {
                     alert(response.data);
                 }, function error(response) {
@@ -97,6 +99,22 @@
             ctx.currentOrder.BaseTotal = 0;
             ctx.currentOrder.TaxTotal = 0;
             ctx.currentOrder.Total = 0;
+        };
+
+        ctx.updateOrderTotals = function () {
+            var total = 0;
+            var tax = 0;
+            var base = 0;
+
+            ctx.currentOrder.Products.forEach(function (item) {
+                total += item.Quantity * item.Price;
+                base += item.Quantity * item.Base;
+                tax += item.Quantity * item.Tax;
+            });
+
+            ctx.currentOrder.Total = total;
+            ctx.currentOrder.TaxTotal = tax;
+            ctx.currentOrder.BaseTotal = base;
         };
     });
 
