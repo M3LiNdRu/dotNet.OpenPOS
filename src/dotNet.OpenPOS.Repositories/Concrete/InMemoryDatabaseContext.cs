@@ -25,6 +25,7 @@ namespace dotNet.OpenPOS.Repositories.Concrete
         public HashSet<ProductFamily> Families { get; set; }
         public HashSet<Tax> Taxes { get; set; }
         public Account Account { get; set; }
+        public HashSet<OrderReference> References { get; set; }
 
         #endregion
 
@@ -78,6 +79,14 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                 new Payment() { Id = 3, OrderId = 3, PaymentType = PaymentType.Cash, Total = 3, Value = 5, ReturnValue = 2 },
                 new Payment() { Id = 4, OrderId = 3, PaymentType = PaymentType.Cash, Total = 3, Value = 10, ReturnValue = 7 },
                 new Payment() { Id = 5, OrderId = 3, PaymentType = PaymentType.Cash, Total = 3, Value = 3, ReturnValue = 0 },
+            };
+
+            References = new HashSet<OrderReference>()
+            {
+                new OrderReference() { Id = 0, Reference = 0, TIMESTAMP = DateTime.UtcNow },
+                new OrderReference() { Id = 1, Reference = 1, TIMESTAMP = DateTime.UtcNow },
+                new OrderReference() { Id = 2, Reference = 2, TIMESTAMP = DateTime.UtcNow },
+                new OrderReference() { Id = 3, Reference = 3, TIMESTAMP = DateTime.UtcNow }
             };
 
             Orders = new HashSet<Order>()

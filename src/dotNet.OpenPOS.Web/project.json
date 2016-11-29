@@ -23,7 +23,8 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.0",
     "dotNet.OpenPOS.Domain": "1.0.0-*",
-    "dotNet.OpenPOS.Services": "1.0.0-*"
+    "dotNet.OpenPOS.Services": "1.0.0-*",
+    "dotNet.OpenPOS.Validation": "1.0.0-*"
   },
 
   "tools": {

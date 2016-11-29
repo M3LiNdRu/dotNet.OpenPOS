@@ -47,8 +47,14 @@
                     <tr ng-repeat="(key, value) in orders.currentOrder.Products">
                         <td><span class="glyphicon glyphicon-remove" ng-click="orders.removeProduct(key)"></span></td>
                         <td>{{value.Name}}</td>
-                        <td>{{value.Quantity}}</td>
-                        <td>{{value.Price}}</td>                     
+                        <td>
+                            <div ng-show="editing" class="form-inline">
+                                <input style="display:inline-block;" type="text" class="form-control" ng-model="value.Quantity">
+                                <span class="glyphicon glyphicon-ok" ng-click="editing = false; orders.updateOrderTotals()"></span>
+                            </div>
+                        <span ng-hide="editing" ng-click="editing = true">{{value.Quantity}}</span>
+                        </td>
+                        <td>{{value.Quantity * value.Price}}</td>                     
                     </tr>
                 </tbody>
             </table>

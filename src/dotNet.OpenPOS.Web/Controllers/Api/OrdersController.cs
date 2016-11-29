@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using dotNet.OpenPOS.Web.Models;
 using dotNet.OpenPOS.Domain.Models;
 using dotNet.OpenPOS.Services.Interfaces;
-
+using dotNet.OpenPOS.Validation;
 
 namespace dotNet.OpenPOS.Web.Controllers.Api
 {
@@ -11,11 +11,16 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
     public class OrdersController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly OrderValidationHelper _validation;
 
         public OrdersController(IOrderService orderRepo)
         {
             _orderService = orderRepo;
+            _validation = new OrderValidationHelper();
+
         }
+
+
         // GET: api/values
         [HttpGet]
         public async Task<BaseResponse> Get()
@@ -36,8 +41,15 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPost]
         public async Task<BaseResponse> Post([FromBody]Order value)
         {
-            var inserted = await _orderService.InsertOrderAsync(value);
-            return new BaseResponse(inserted, null, "Inserted");
+            var validate = _validation.ValidateOnPost(value);
+
+            if (validate.Valid)
+            {
+                var created = await _orderService.CreateOrderAsync(value);
+                return new BaseResponse(created, value, "Created");
+            }
+
+            return new BaseResponse(validate.Valid, null, validate.Message);
         }
 
         // PUT api/values/5

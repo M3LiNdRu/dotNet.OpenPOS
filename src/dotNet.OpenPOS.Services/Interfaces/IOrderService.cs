@@ -10,7 +10,7 @@ namespace dotNet.OpenPOS.Services.Interfaces
         Task<IEnumerable<Order>> GetAllOrdersAsync();
 
         Task<Order> GetOrderByIdAsync(int id);
-        Task<bool> InsertOrderAsync(Order intenty);
+        Task<bool> CreateOrderAsync(Order intenty);
         Task<bool> UpdateOrderAsync(Order identity);
         Task<bool> DeleteOrderAsync(int id);
 

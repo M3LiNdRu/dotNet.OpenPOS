@@ -61,8 +61,7 @@
                     function (item) {
                         if (item.Id == product.Id)
                         {
-                            item.Quantity++;
-                            item.Price = item.Quantity * item.Price;                           
+                            item.Quantity++;                     
                         }                            
                 });            
             }

@@ -5,16 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotNet.OpenPOS.Domain.Models;
+using dotNet.OpenPOS.Services.Helpers;
 
 namespace dotNet.OpenPOS.Services.Concrete
 {
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderReferenceRepository _referenceRepository;
+        private readonly OrderHelper _orderHelper;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IOrderReferenceRepository referenceRepository)
         {
             _orderRepository = orderRepository;
+            _referenceRepository = referenceRepository;
+            _orderHelper = new OrderHelper();
         }
 
         public async Task<bool> DeleteOrderAsync(int id)
@@ -37,8 +42,20 @@ namespace dotNet.OpenPOS.Services.Concrete
             return await _orderRepository.FindByIdAsync(id);
         }
 
-        public async Task<bool> InsertOrderAsync(Order entity)
+        public async Task<bool> CreateOrderAsync(Order entity)
         {
+            //1. Generate Reference
+            entity.Reference = await _referenceRepository.GetOrderReferenceAsync();
+
+            //2. Calculate product prices
+
+            //3. Calculate totals
+            _orderHelper.UpdateOrderTotals(entity);
+
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.TIMESTAMP = DateTime.UtcNow;
+            
+            //4.Insert
             return await _orderRepository.InsertAsync(entity);
         }
 

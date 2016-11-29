@@ -12,5 +12,6 @@ namespace dotNet.OpenPOS.Repositories.Interfaces
         HashSet<ProductFamily> Families { get; set; }
         HashSet<Tax> Taxes { get; set; }
         Account Account { get; set; }
+        HashSet<OrderReference> References { get; set; }
     }
 }
