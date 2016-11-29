@@ -41,6 +41,7 @@ namespace dotNet.OpenPOS.Web.Controllers.Api
         [HttpPost]
         public async Task<BaseResponse> Post([FromBody]Order value)
         {
+            var request = Request;
             var validate = _validation.ValidateOnPost(value);
 
             if (validate.Valid)

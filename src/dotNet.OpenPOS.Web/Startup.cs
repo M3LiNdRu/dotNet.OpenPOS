@@ -38,14 +38,16 @@ namespace dotNet.OpenPOS.Web
 
             //Add own services.
             services.AddSingleton<IDatabaseContext, InMemoryDatabaseContext>();
-            services.AddTransient<IProductFamilyRepository, ProductFamilyRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IPaymentRepository, PaymentRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IAccountRepository, AccountRepository>();
-            services.AddTransient<IInventoryService, InventoryService>();
-            services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IAccountService, AccountService>();
+            services.AddScoped<IProductFamilyRepository, ProductFamilyRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderReferenceRepository, OrderReferenceRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ITaxRepository, TaxRepository>();
+            services.AddScoped<IInventoryService, InventoryService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IAccountService, AccountService>();
 
 
             // Add framework services.

@@ -13,12 +13,17 @@ namespace dotNet.OpenPOS.Services.Concrete
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderReferenceRepository _referenceRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly ITaxRepository _taxRepository;
         private readonly OrderHelper _orderHelper;
 
-        public OrderService(IOrderRepository orderRepository, IOrderReferenceRepository referenceRepository)
+        public OrderService(IOrderRepository orderRepository, IOrderReferenceRepository referenceRepository,
+            IProductRepository productRepository, ITaxRepository taxRepository)
         {
             _orderRepository = orderRepository;
             _referenceRepository = referenceRepository;
+            _productRepository = productRepository;
+            _taxRepository = taxRepository;
             _orderHelper = new OrderHelper();
         }
 
@@ -48,6 +53,9 @@ namespace dotNet.OpenPOS.Services.Concrete
             entity.Reference = await _referenceRepository.GetOrderReferenceAsync();
 
             //2. Calculate product prices
+            var products = await _productRepository.FindByIdAsync(entity.Products.Select(p => p.Id));
+            var taxes = await _taxRepository.GetAllAsync();
+            _orderHelper.UpdateOrderProducts(entity, products, taxes);
 
             //3. Calculate totals
             _orderHelper.UpdateOrderTotals(entity);

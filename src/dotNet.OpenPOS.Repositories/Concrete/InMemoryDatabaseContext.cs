@@ -94,7 +94,10 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                 new Order() {
                     Id = 0,
                     Reference = 0,
-                    BaseTotal = 2,
+                    Taxes = new List<TaxOrder>()
+                    {
+                        new TaxOrder { Code = "10%", Base = 2, Tax = 0.2  }
+                    },
                     CreatedDate = DateTime.UtcNow.AddDays(-21),
                     Name = "Violí",
                     Products = new List<ProductOrder>()
@@ -102,28 +105,32 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                         new ProductOrder() { Code = "COCACOLA", Name = "Coca Cola", Quantity = 1, Price = 1.10 },
                         new ProductOrder() { Code = "AIGUA", Name = "Aigua", Quantity = 1, Price = 1.10 }
                     },
-                    TaxTotal = 0.2,
                     Total = 2.2,
                     TIMESTAMP = DateTime.UtcNow.AddDays(-21)
                 },
                 new Order() {
                     Id = 1,
                     Reference = 1,
-                    BaseTotal = 12,
+                    Taxes = new List<TaxOrder>()
+                    {
+                        new TaxOrder { Code = "10%", Base = 12, Tax = 6 }
+                    },
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Name = "Joan",
                     Products = new List<ProductOrder>()
                     {
                         new ProductOrder() { Code = "PLAT-1", Name = "CARN A LA BRASA", Quantity = 3, Price = 18 }
                     },
-                    TaxTotal = 6,
                     Total = 18.0,
                     TIMESTAMP = DateTime.UtcNow.AddDays(-10)
                 },
                 new Order() {
                     Id = 2,
                     Reference = 2,
-                    BaseTotal = 3.75,
+                    Taxes = new List<TaxOrder>()
+                    {
+                        new TaxOrder { Code = "10%", Base = 3.75, Tax = 1.05 }
+                    },
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
                     Name = "Terrassa-1",
                     Products = new List<ProductOrder>()
@@ -131,21 +138,22 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                           new ProductOrder() { Code = "ETRUITA", Name = "ENTREPA TRUITA", Quantity = 1, Price = 3.5 },
                           new ProductOrder() { Code = "MORITZ", Name = "CERVESA MORITZ", Quantity = 1, Price = 1.30 }
                     },
-                    TaxTotal = 1.05,
                     Total = 4.8,
                     TIMESTAMP = DateTime.UtcNow.AddDays(-2)
                 },
                 new Order() {
                     Id = 3,
                     Reference = 3,
-                    BaseTotal = 8.1,
+                    Taxes = new List<TaxOrder>()
+                    {
+                        new TaxOrder { Code = "10%", Base = 8.1, Tax = 0.9 }
+                    },
                     CreatedDate = DateTime.UtcNow,
                     Name = "Taula-3",
                     Products = new List<ProductOrder>()
                     {
                           new ProductOrder() { Code = "TBRAVES", Name = "Tapa Patates Braves", Quantity = 3, Price = 9 },
                     },
-                    TaxTotal = 0.9,
                     Total = 9,
                     TIMESTAMP = DateTime.UtcNow
                 }

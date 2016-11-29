@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotNet.OpenPOS.Domain.Models;
+using System;
 
 namespace dotNet.OpenPOS.Repositories.Concrete
 {
@@ -54,5 +55,11 @@ namespace dotNet.OpenPOS.Repositories.Concrete
             return _context.Products.Remove(entity);
         }
 
+        public async Task<IEnumerable<Product>> FindByIdAsync(IEnumerable<int> ids)
+        {
+            var entities = _context.Products.Where(p => ids.Contains(p.Id));
+
+            return entities;
+        }
     }
 }
