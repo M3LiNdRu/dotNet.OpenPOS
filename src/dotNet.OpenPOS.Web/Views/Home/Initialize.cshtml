@@ -32,23 +32,23 @@
                     <form name="dbConfigForm" ng-submit="configCtrl.addDbConfig()">
                         <div class="form-group">
                             <label for="serverName">Server Address</label>
-                            <input id="serverName" ng-model="configCtrl.dbConfig.ServerName" type="text" class="form-control" required/>
+                            <input id="serverName" ng-model="configCtrl.dbConfig.serverName" type="text" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="port">Port</label>
-                            <input id="port" ng-model="configCtrl.dbConfig.Port" type="number" class="form-control" required/>
+                            <input id="port" ng-model="configCtrl.dbConfig.port" type="number" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="userName">UserName</label>
-                            <input id="userName" ng-model="configCtrl.dbConfig.UserName" type="text" class="form-control" />
+                            <input id="userName" ng-model="configCtrl.dbConfig.userName" type="text" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input id="password" ng-model="configCtrl.dbConfig.Password" type="password" class="form-control" />
+                            <input id="password" ng-model="configCtrl.dbConfig.password" type="password" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="databaseName">Database Name</label>
-                            <input id="databaseName" ng-model="configCtrl.dbConfig.DatabaseName" type="text" class="form-control" required/>
+                            <input id="databaseName" ng-model="configCtrl.dbConfig.databaseName" type="text" class="form-control" required/>
                         </div>                                               
                         <button ng-click="configCtrl.testConfig()"class="btn btn-info">Test Connection</button>
                         <button type="reset" class="btn btn-warning">Reset Values</button>

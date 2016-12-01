@@ -19,10 +19,10 @@
                     <tr>
                         <th>
                             <div ng-show="editing" class="form-inline">
-                                <input style="display:inline-block;" type="text" class="form-control" ng-model="orders.currentOrder.Name"> 
+                                <input style="display:inline-block;" type="text" class="form-control" ng-model="orders.currentOrder.name"> 
                                 <span class="glyphicon glyphicon-ok" ng-click="editing = false"></span>
                             </div>                     
-                            <span ng-hide="editing" ng-click="editing = true">{{orders.currentOrder.Name}}</span>
+                            <span ng-hide="editing" ng-click="editing = true">{{orders.currentOrder.name}}</span>
                         </th>
                         <th></th>
                         <th></th>
@@ -40,33 +40,36 @@
                         <td>Total</td>
                         <td></td>
                         <td></td>
-                        <td>{{ orders.currentOrder.Total | currency }}</td>
+                        <td>{{ orders.currentOrder.total | currency }}</td>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <tr ng-repeat="(key, value) in orders.currentOrder.Products">
+                    <tr ng-repeat="(key, value) in orders.currentOrder.products">
                         <td><span class="glyphicon glyphicon-remove" ng-click="orders.removeProduct(key)"></span></td>
-                        <td>{{value.Name}}</td>
+                        <td>{{value.name}}</td>
                         <td>
                             <div ng-show="editing" class="form-inline">
-                                <input style="display:inline-block;" type="text" class="form-control" ng-model="value.Quantity">
+                                <input style="display:inline-block;" type="text" class="form-control" ng-model="value.quantity">
                                 <span class="glyphicon glyphicon-ok" ng-click="editing = false; orders.updateOrderTotals()"></span>
                             </div>
-                        <span ng-hide="editing" ng-click="editing = true">{{value.Quantity}}</span>
+                        <span ng-hide="editing" ng-click="editing = true">{{value.quantity}}</span>
                         </td>
-                        <td>{{value.Quantity * value.Price}}</td>                     
+                        <td>{{value.quantity * value.price}}</td>                     
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-success" ng-click="orders.create()">Submit</button>
+            <button class="btn btn-success" ng-disabled="orders.currentOrder.total == 0" ng-click="orders.create()">Submit</button>
             <button class="btn btn-warning" ng-click="orders.clear()">Clear</button>
         </div>
         <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
-            <input id="inventory-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products)" />
+            <input id="inventory-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products,new Newtonsoft.Json.JsonSerializerSettings 
+    { 
+        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver() 
+    })" />
             <div>
                 <span class="tag tag-default" ng-show="products.inventories.length > 0" ng-click="products.backproductFamily()">Back</span>
-                <span class="tag tag-default" ng-repeat="(key, value) in products.inventory.ProductFamilies" ng-click="products.loadProductFamily(key)">
-                   {{value.FamilyName}} - ({{value.Products.length}})
+                <span class="tag tag-default" ng-repeat="(key, value) in products.inventory.productFamilies" ng-click="products.loadProductFamily(key)">
+                   {{value.familyName}} - ({{value.products.length}})
                 </span>             
             </div>
             <div>
@@ -79,10 +82,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="(key, value) in products.inventory.Products" ng-click="orders.addProduct(value)">
-                            <td>{{value.Name}}</td>
+                        <tr ng-repeat="(key, value) in products.inventory.products" ng-click="orders.addProduct(value)">
+                            <td>{{value.name}}</td>
                             <td></td>
-                            <td>{{value.Price}}</td>
+                            <td>{{value.price}}</td>
                         </tr>
                     </tbody>
                 </table>

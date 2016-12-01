@@ -28,7 +28,7 @@
 
         ctx.loadProductFamily = function (index) {
             ctx.inventories.push(ctx.inventory);
-            ctx.inventory = ctx.inventory.ProductFamilies[index];
+            ctx.inventory = ctx.inventory.productFamilies[index];
         };
 
         ctx.refreshTopProducts();
@@ -41,27 +41,26 @@
         var ctx = this;
 
         ctx.currentOrder = {
-            Name: 'NewOrder',
-            Reference: 'NewOrder-00',
-            Products: [ ],
-            BaseTotal: 0,
-            TaxTotal: 0,
-            Total: 0
+            reference: 0,
+            name: 'NewOrder',
+            products: [],
+            total: 0,
         };
+        ctx.ordersList = [];
 
         ctx.addProduct = function (product) {
             console.log("Added Product to Cart", product);            
-            var result = $.grep(ctx.currentOrder.Products, function (e) { return e.Id == product.Id; });
+            var result = $.grep(ctx.currentOrder.products, function (e) { return e.id == product.id; });
             if (result.length == 0) {
-                var newproduct = { Id: product.Id, Name: product.Name, Quantity: 1, Price: product.Price, Tax: product.Tax, Base: product.BasePrice };
-                ctx.currentOrder.Products.push(newproduct);
+                var newproduct = { id: product.id, name: product.name, quantity: 1, price: product.price, tax: product.tax, base: product.basePrice };
+                ctx.currentOrder.products.push(newproduct);
             }
             else {
-                ctx.currentOrder.Products.forEach(
+                ctx.currentOrder.products.forEach(
                     function (item) {
-                        if (item.Id == product.Id)
+                        if (item.id == product.id)
                         {
-                            item.Quantity++;                     
+                            item.quantity++;                     
                         }                            
                 });            
             }
@@ -71,16 +70,19 @@
 
         ctx.removeProduct = function (index) {
             console.log("Removed Product from Cart", index);
-            ctx.currentOrder.Products.splice(index, 1); 
+            ctx.currentOrder.products.splice(index, 1); 
             ctx.updateOrderTotals();
         }
 
         ctx.create = function () {
+            console.log('Create Order', ctx.currentOrder);
+            //var data = { reference: 0, name: "NewOrder", products: [{ id: 4, name: "ENTREPA TRUITA", quantity: 1, price: 3.5, base: 3 }], total: 3.5 };
             $http.post("api/orders", ctx.currentOrder)
                 .then(function success(response) {
-                    alert(response.data);
+                    ctx.clear();
+                    ctx.refreshOrdersList();
                 }, function error(response) {
-                    alert(response.data);
+                    alert("Ups! Something happened" + response.data);
                 });
         };
 
@@ -89,31 +91,33 @@
                 .then(function success(response) {
                     alert(response.data);
                 }, function error(response) {
-                    alert(response.data);
+                    alert("Ups! Something happened" + response.data);
                 });
         };
 
         ctx.clear = function () {
-            ctx.currentOrder.Products = [];
-            ctx.currentOrder.BaseTotal = 0;
-            ctx.currentOrder.TaxTotal = 0;
-            ctx.currentOrder.Total = 0;
+            ctx.currentOrder.products = [];
+            ctx.currentOrder.total = 0;
         };
 
         ctx.updateOrderTotals = function () {
             var total = 0;
-            var tax = 0;
-            var base = 0;
 
-            ctx.currentOrder.Products.forEach(function (item) {
-                total += item.Quantity * item.Price;
-                base += item.Quantity * item.Base;
-                tax += item.Quantity * item.Tax;
+            ctx.currentOrder.products.forEach(function (item) {
+                total += item.quantity * item.price;
             });
 
-            ctx.currentOrder.Total = total;
-            ctx.currentOrder.TaxTotal = tax;
-            ctx.currentOrder.BaseTotal = base;
+            ctx.currentOrder.total = total;
+        };
+
+        ctx.refreshOrdersList = function () {
+            $http.get("api/orders")
+                .then(function success(response) {
+                    ctx.ordersList = response.data;
+                    console.log("Orders list", ctx.ordersList);
+                }, function error(response) {
+                    alert("Ups! Something happened" + response.data);
+                });
         };
     });
 
@@ -133,11 +137,11 @@
         var ctx = this;
 
         ctx.dbConfig = {
-            ServerName: "http://",
-            Port: 1433,
-            UserName: "UserName",
-            Password: "Password",
-            DatabaseName: "openPOS"
+            serverName: "http://",
+            port: 1433,
+            userName: "UserName",
+            password: "Password",
+            databaseName: "openPOS"
         };
 
         ctx.addDbConfigResponse = false;

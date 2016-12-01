@@ -8,6 +8,7 @@ using dotNet.OpenPOS.Repositories.Concrete;
 using dotNet.OpenPOS.Services.Interfaces;
 using dotNet.OpenPOS.Services.Concrete;
 using dotNet.OpenPOS.Web.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace dotNet.OpenPOS.Web
 {
@@ -52,6 +53,7 @@ namespace dotNet.OpenPOS.Web
 
             // Add framework services.
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
