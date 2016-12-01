@@ -32,6 +32,9 @@ namespace dotNet.OpenPOS.Repositories.Concrete
 
         public async Task<bool> InsertAsync(Order entity)
         {
+            var lastId = _context.Orders.Max(o => o.Id);
+            entity.Id = lastId + 1;
+
             return _context.Orders.Add(entity);
         }
 
