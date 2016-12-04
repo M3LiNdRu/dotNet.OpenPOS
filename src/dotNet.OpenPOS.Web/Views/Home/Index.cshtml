@@ -96,9 +96,9 @@
             <ul>
                 @foreach (var o in Model.LastDailyOrders)
                 {
-                    <li>@o.CreatedDate - @o.Name - @o.Total €</li>
+                    <li class="orders-list-item">@o.CreatedDate - @o.Name - @o.Total €</li>
                 }
-                <li class="orders-list-item" ng-repeat="(key, value) in orders.ordersList">{{ value.createdDate }} - {{ value.name }} - {{ value.total }}</li>
+                <li class="orders-list-item" ng-repeat="order in orders.ordersList">{{ order.createdDate }} - {{ order.name }} - {{ order.total }}</li>
             </ul>
         </div>
     </div>

@@ -98,6 +98,8 @@
         ctx.clear = function () {
             ctx.currentOrder.products = [];
             ctx.currentOrder.total = 0;
+            ctx.currentOrder.name = 'NewOrder';
+            ctx.currentOrder.reference = 0;
         };
 
         ctx.updateOrderTotals = function () {
@@ -114,18 +116,19 @@
             console.log("Refresh orders");
             var ul = angular.element(".orders-list-item");
 
+
             angular.forEach(ul, function (value, key) {
                 var data = angular.element(value);
                 data.remove();
             });
 
-            $http.get("api/orders")
-                .then(function success(response) {
-                    ctx.ordersList = response.data;
-                    console.log("Orders list", ctx.ordersList);
-                }, function error(response) {
-                    alert("Ups! Something happened" + response.data);
-                });
+            //$http.get("api/orders")
+            //    .then(function success(response) {
+            //        ctx.ordersList = response.data;
+            //        console.log("Orders list", ctx.ordersList);
+            //    }, function error(response) {
+            //        alert("Ups! Something happened" + response.data);
+            //    });
         };
     });
 
