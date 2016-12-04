@@ -111,6 +111,14 @@
         };
 
         ctx.refreshOrdersList = function () {
+            console.log("Refresh orders");
+            var ul = angular.element(".orders-list-item");
+
+            angular.forEach(ul, function (value, key) {
+                var data = angular.element(value);
+                data.remove();
+            });
+
             $http.get("api/orders")
                 .then(function success(response) {
                     ctx.ordersList = response.data;

@@ -4,8 +4,9 @@
 }
 
 <div id="container-pos">
-    <div class="row">      
-    </div>
+    <!-- First Row -->
+    <div class="row"></div>
+    <!-- Second Row Orders / Products list -->
     <div class="row" ng-controller="OrdersController as orders">
         <section class="col-lg-10" ng-init="tab = 1">
             <ul class="nav nav-pills" style="float:right;">
@@ -13,6 +14,7 @@
                 <li><a href ng-click="tab = 2">Orders</a></li>
             </ul>
         </section>
+        <!-- Current order section -->
         <div class="order col-md-6" >
             <table class="table table-striped">
                 <thead>
@@ -61,11 +63,8 @@
             <button class="btn btn-success" ng-disabled="orders.currentOrder.total == 0" ng-click="orders.create()">Submit</button>
             <button class="btn btn-warning" ng-click="orders.clear()">Clear</button>
         </div>
+        <!-- Product list section Tab 1 -->
         <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
-            <input id="inventory-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products,new Newtonsoft.Json.JsonSerializerSettings 
-    { 
-        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver() 
-    })" />
             <div>
                 <span class="tag tag-default" ng-show="products.inventories.length > 0" ng-click="products.backproductFamily()">Back</span>
                 <span class="tag tag-default" ng-repeat="(key, value) in products.inventory.productFamilies" ng-click="products.loadProductFamily(key)">
@@ -91,15 +90,19 @@
                 </table>
             </div>
         </div>
+        <!-- Daily Order section Tab 2 -->
         <div class="col-md-6" ng-show="tab == 2">
+            <a href class="fa fa-refresh" ng-click="orders.refreshOrdersList()">Refresh</a>
             <ul>
                 @foreach (var o in Model.LastDailyOrders)
                 {
                     <li>@o.CreatedDate - @o.Name - @o.Total €</li>
                 }
+                <li class="orders-list-item" ng-repeat="(key, value) in orders.ordersList">{{ value.createdDate }} - {{ value.name }} - {{ value.total }}</li>
             </ul>
         </div>
     </div>
+    <!-- Third Calculator / TopProducts -->
     <div class="row">
         <div class="col-md-6">
             <h2>Calculator</h2>
@@ -116,4 +119,11 @@
             <p>Last update: {{ products.randomNumber }}</p>
         </div>
     </div>
+    <!-- Hidden Data -->
+    <div>
+        <input id="inventory-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products,new Newtonsoft.Json.JsonSerializerSettings
+        {
+            ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+        })" />
+    </div>  
 </div>
