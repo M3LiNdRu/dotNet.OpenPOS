@@ -98,6 +98,8 @@
         ctx.clear = function () {
             ctx.currentOrder.products = [];
             ctx.currentOrder.total = 0;
+            ctx.currentOrder.name = "NewOrder";
+            ctx.currentOrder.reference = 0;
         };
 
         ctx.updateOrderTotals = function () {
