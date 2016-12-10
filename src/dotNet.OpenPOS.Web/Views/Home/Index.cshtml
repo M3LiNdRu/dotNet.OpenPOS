@@ -24,7 +24,7 @@
                                 <input style="display:inline-block;" type="text" class="form-control" ng-model="orders.currentOrder.name"> 
                                 <span class="glyphicon glyphicon-ok" ng-click="editing = false"></span>
                             </div>                     
-                            <span ng-hide="editing" ng-click="editing = true">{{orders.currentOrder.name}}</span>
+                            <h4 ng-hide="editing" ng-click="editing = true">{{orders.currentOrder.name}}</h4>
                         </th>
                         <th></th>
                         <th></th>
@@ -96,9 +96,12 @@
             <ul>
                 @foreach (var o in Model.LastDailyOrders)
                 {
-                    <li>@o.CreatedDate - @o.Name - @o.Total €</li>
+                    <li class="orders-list-item" ng-click="orders.dragToCurrentOrderSection(@Newtonsoft.Json.JsonConvert.SerializeObject(o,new Newtonsoft.Json.JsonSerializerSettings
+        {ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()}))">@o.CreatedDate - @o.Name - @o.Total €</li>
                 }
-                <li class="orders-list-item" ng-repeat="(key, value) in orders.ordersList">{{ value.createdDate }} - {{ value.name }} - {{ value.total }}</li>
+                <li ng-repeat="(key, value) in orders.ordersList">
+                    <span ng-click="orders.dragToCurrentOrderSection(value)">{{ value.createdDate | date:'dd-MM-yyyy HH:mm:ss':'+0100' }} - {{ value.name }} - {{ value.total }}</span>
+                </li>
             </ul>
         </div>
     </div>

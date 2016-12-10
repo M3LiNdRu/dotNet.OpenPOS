@@ -121,11 +121,17 @@
 
             $http.get("api/orders")
                 .then(function success(response) {
-                    ctx.ordersList = response.data;
+                    ctx.ordersList = response.data.data;
                     console.log("Orders list", ctx.ordersList);
                 }, function error(response) {
                     alert("Ups! Something happened" + response.data);
                 });
+        };
+
+        ctx.dragToCurrentOrderSection = function (order) {
+            console.log("DragToCurrentOrderSection", order);
+            ctx.currentOrder = order;
+            ctx.updateOrderTotals();
         };
     });
 
