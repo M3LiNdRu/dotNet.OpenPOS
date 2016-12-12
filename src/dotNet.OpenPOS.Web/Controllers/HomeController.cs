@@ -13,14 +13,16 @@ namespace dotNet.OpenPOS.Web.Controllers
         private readonly IOrderService _orderService;
         private readonly IOptions<AppSettings> _optionsAccessor;
         private readonly IConfigurationRoot _configuration;
+        private readonly IPaymentService _paymentService;
 
         public HomeController(IInventoryService inventoryService,IOrderService orderService,
-            IOptions<AppSettings> optionsAccessor, IConfigurationRoot configuration)
+            IOptions<AppSettings> optionsAccessor, IConfigurationRoot configuration, IPaymentService paymentService)
         {
             _inventoryService = inventoryService;
             _orderService = orderService;
             _optionsAccessor = optionsAccessor;
             _configuration = configuration;
+            _paymentService = paymentService;
         }
 
         public async Task<IActionResult> Index()
@@ -35,6 +37,7 @@ namespace dotNet.OpenPOS.Web.Controllers
             model.Products = await _inventoryService.GetInventoryAsync();
             model.LastDailyOrders = await _orderService.GetDailyOrdersAsync();
             model.TopProducts = await _inventoryService.GetTopProductsAsync(5);
+            model.PaymentTypes = await _paymentService.GetPaymentTypesAsync();
 
             return View(model);
         }

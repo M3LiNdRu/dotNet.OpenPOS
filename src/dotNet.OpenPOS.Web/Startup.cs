@@ -49,6 +49,7 @@ namespace dotNet.OpenPOS.Web
             services.AddScoped<IInventoryService, InventoryService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
 
             // Add framework services.

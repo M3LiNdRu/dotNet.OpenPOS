@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dotNet.OpenPOS.Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace dotNet.OpenPOS.Domain.Models
@@ -13,6 +14,7 @@ namespace dotNet.OpenPOS.Domain.Models
         public IEnumerable<TaxOrder> Taxes { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime TIMESTAMP { get; set; }
+        public OrderStatusType Status { get; set; }
     }
 
     public class ProductOrder

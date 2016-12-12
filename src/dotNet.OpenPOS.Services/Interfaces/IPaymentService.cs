@@ -1,4 +1,5 @@
-﻿using dotNet.OpenPOS.Domain.Models;
+﻿using dotNet.OpenPOS.Domain.Enums;
+using dotNet.OpenPOS.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace dotNet.OpenPOS.Services.Interfaces
         Task<bool> InsertPaymentAsync(Payment entity);
         Task<bool> UpdatePaymentAsync(Payment entity);
         Task<bool> DeletePaymentAsync(int id);
+        Task<IDictionary<PaymentType, string>> GetPaymentTypesAsync();
     }
 }

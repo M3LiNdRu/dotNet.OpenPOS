@@ -106,7 +106,8 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                         new ProductOrder() { Code = "AIGUA", Name = "Aigua", Quantity = 1, Price = 1.10 }
                     },
                     Total = 2.2,
-                    TIMESTAMP = DateTime.UtcNow.AddDays(-21)
+                    TIMESTAMP = DateTime.UtcNow.AddDays(-21),
+                    Status = OrderStatusType.Closed
                 },
                 new Order() {
                     Id = 1,
@@ -122,7 +123,8 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                         new ProductOrder() { Code = "PLAT-1", Name = "CARN A LA BRASA", Quantity = 3, Price = 18 }
                     },
                     Total = 18.0,
-                    TIMESTAMP = DateTime.UtcNow.AddDays(-10)
+                    TIMESTAMP = DateTime.UtcNow.AddDays(-10),
+                    Status = OrderStatusType.Closed
                 },
                 new Order() {
                     Id = 2,
@@ -139,7 +141,8 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                           new ProductOrder() { Code = "MORITZ", Name = "CERVESA MORITZ", Quantity = 1, Price = 1.30 }
                     },
                     Total = 4.8,
-                    TIMESTAMP = DateTime.UtcNow.AddDays(-2)
+                    TIMESTAMP = DateTime.UtcNow.AddDays(-2),
+                    Status = OrderStatusType.Closed
                 },
                 new Order() {
                     Id = 3,
@@ -155,7 +158,8 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                           new ProductOrder() { Code = "TBRAVES", Name = "Tapa Patates Braves", Quantity = 3, Price = 9 },
                     },
                     Total = 9,
-                    TIMESTAMP = DateTime.UtcNow
+                    TIMESTAMP = DateTime.UtcNow,
+                    Status = OrderStatusType.Open
                 }
             };
         }

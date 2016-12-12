@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotNet.OpenPOS.Domain.Models;
+using dotNet.OpenPOS.Domain.Enums;
 
 namespace dotNet.OpenPOS.Repositories.Concrete
 {
@@ -50,5 +51,16 @@ namespace dotNet.OpenPOS.Repositories.Concrete
             return _context.Payments.Remove(entity);
         }
 
+        public IDictionary<PaymentType, string> GetPaymentTypes()
+        {
+            var result = new Dictionary<PaymentType, string>()
+            {
+                { PaymentType.Cash, "Cash" },
+                { PaymentType.Card, "Card" },
+                { PaymentType.Bonus, "Bonus"}
+            };
+
+            return result;
+        }
     }
 }

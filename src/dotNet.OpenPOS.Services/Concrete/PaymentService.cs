@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotNet.OpenPOS.Domain.Models;
+using dotNet.OpenPOS.Domain.Enums;
 
 namespace dotNet.OpenPOS.Services.Concrete
 {
@@ -30,6 +31,11 @@ namespace dotNet.OpenPOS.Services.Concrete
         public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()
         {
             return await _paymentRepository.GetAllAsync();
+        }
+
+        public async Task<IDictionary<PaymentType, string>> GetPaymentTypesAsync()
+        {
+            return _paymentRepository.GetPaymentTypes();
         }
 
         public async Task<bool> InsertPaymentAsync(Payment entity)

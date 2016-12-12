@@ -8,12 +8,7 @@
     <div class="row"></div>
     <!-- Second Row Orders / Products list -->
     <div class="row" ng-controller="OrdersController as orders">
-        <section class="col-lg-10" ng-init="tab = 1">
-            <ul class="nav nav-pills" style="float:right;">
-                <li><a href ng-click="tab = 1">Products</a></li>
-                <li><a href ng-click="tab = 2">Orders</a></li>
-            </ul>
-        </section>
+        
         <!-- Current order section -->
         <div class="order col-md-6" >
             <table class="table table-striped">
@@ -60,50 +55,70 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-success" ng-disabled="orders.currentOrder.total == 0" ng-click="orders.create()">Submit</button>
+            <button class="btn btn-success" ng-disabled="orders.currentOrder.total == 0 || orders.currentOrder.status != 1" ng-click="orders.create()">Pay</button>
             <button class="btn btn-warning" ng-click="orders.clear()">Clear</button>
         </div>
-        <!-- Product list section Tab 1 -->
-        <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
-            <div>
-                <span class="tag tag-default" ng-show="products.inventories.length > 0" ng-click="products.backproductFamily()">Back</span>
-                <span class="tag tag-default" ng-repeat="(key, value) in products.inventory.productFamilies" ng-click="products.loadProductFamily(key)">
-                   {{value.familyName}} - ({{value.products.length}})
-                </span>             
+        <!-- Tabs section -->
+        <div>
+            <section class="col-md-4" ng-init="tab = 1">
+                <ul class="nav nav-pills" style="float:right;">
+                    <li><a href ng-click="tab = 1">Products</a></li>
+                    <li><a href ng-click="tab = 2">Orders</a></li>
+                    <li><a href ng-click="tab = 3">Payments</a></li>
+                </ul>
+            </section>
+            <!-- Product list section Tab 1 -->
+            <div class="products col-md-6" ng-controller="ProductsController as products" ng-show="tab == 1">
+                <div>
+                    <span class="tag tag-default" ng-show="products.inventories.length > 0" ng-click="products.backproductFamily()">Back</span>
+                    <span class="tag tag-default" ng-repeat="(key, value) in products.inventory.productFamilies" ng-click="products.loadProductFamily(key)">
+                        {{value.familyName}} - ({{value.products.length}})
+                    </span>
+                </div>
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(key, value) in products.inventory.products" ng-click="orders.addProduct(value)">
+                                <td>{{value.name}}</td>
+                                <td></td>
+                                <td>{{value.price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Code</th>
-                        <th>Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="(key, value) in products.inventory.products" ng-click="orders.addProduct(value)">
-                            <td>{{value.name}}</td>
-                            <td></td>
-                            <td>{{value.price}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Daily Order section Tab 2 -->
+            <div class="daily col-md-6" ng-show="tab == 2">
+                <a href class="fa fa-refresh" ng-click="orders.refreshOrdersList()">Refresh</a>
+                <ul>
+                    @foreach (var o in Model.LastDailyOrders)
+                    {
+                        <li class="orders-list-item" ng-click="orders.dragToCurrentOrderSection(@Newtonsoft.Json.JsonConvert.SerializeObject(o,new Newtonsoft.Json.JsonSerializerSettings
+        {ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()}))">@o.CreatedDate-@o.Name-@o.Total€</li>
+                    }
+                    <li ng-repeat="(key, value) in orders.ordersList">
+                        <span ng-click="orders.dragToCurrentOrderSection(value)">{{ value.createdDate | date:'dd-MM-yyyy HH:mm:ss':'+0100' }} - {{ value.name }} - {{ value.total }}</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- Payment section Tab 3 -->
+            <div class="payments col-md-6" ng-show="tab == 3">
+                <ul>
+                    @foreach (var p in Model.PaymentTypes)
+                    {
+                        <li data-paymentId="@p.Key">@p.Value</li>
+                    }
+                </ul>
             </div>
         </div>
-        <!-- Daily Order section Tab 2 -->
-        <div class="col-md-6" ng-show="tab == 2">
-            <a href class="fa fa-refresh" ng-click="orders.refreshOrdersList()">Refresh</a>
-            <ul>
-                @foreach (var o in Model.LastDailyOrders)
-                {
-                    <li class="orders-list-item" ng-click="orders.dragToCurrentOrderSection(@Newtonsoft.Json.JsonConvert.SerializeObject(o,new Newtonsoft.Json.JsonSerializerSettings
-        {ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()}))">@o.CreatedDate - @o.Name - @o.Total €</li>
-                }
-                <li ng-repeat="(key, value) in orders.ordersList">
-                    <span ng-click="orders.dragToCurrentOrderSection(value)">{{ value.createdDate | date:'dd-MM-yyyy HH:mm:ss':'+0100' }} - {{ value.name }} - {{ value.total }}</span>
-                </li>
-            </ul>
-        </div>
+        
     </div>
     <!-- Third Calculator / TopProducts -->
     <div class="row">
