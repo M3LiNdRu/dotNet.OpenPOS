@@ -62,6 +62,7 @@ namespace dotNet.OpenPOS.Services.Concrete
 
             entity.CreatedDate = DateTime.UtcNow;
             entity.TIMESTAMP = DateTime.UtcNow;
+            entity.Status = Domain.Enums.OrderStatusType.Open;
             
             //4.Insert
             return await _orderRepository.InsertAsync(entity);

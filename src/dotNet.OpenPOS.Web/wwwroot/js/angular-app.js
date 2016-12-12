@@ -45,6 +45,7 @@
             name: 'NewOrder',
             products: [],
             total: 0,
+            status: 0 
         };
         ctx.ordersList = [];
 
@@ -74,16 +75,26 @@
             ctx.updateOrderTotals();
         }
 
-        ctx.create = function () {
+        ctx.createAndPay = function () {
+            ctx.create(function success(response) {
+                ctx.refreshOrdersList();
+            });
+        };
+
+        ctx.createAndHold = function () {
+            ctx.create(function success(response) {
+                ctx.clear();
+                ctx.refreshOrdersList();
+            });
+        };
+
+        ctx.create = function (successCallback) {
             console.log('Create Order', ctx.currentOrder);
             //var data = { reference: 0, name: "NewOrder", products: [{ id: 4, name: "ENTREPA TRUITA", quantity: 1, price: 3.5, base: 3 }], total: 3.5 };
             $http.post("api/orders", ctx.currentOrder)
-                .then(function success(response) {
-                    ctx.clear();
-                    ctx.refreshOrdersList();
-                }, function error(response) {
+                .then(successCallback, function error(response) {
                     alert("Ups! Something happened" + response.data);
-                });
+                }); 
         };
 
         ctx.update = function () {
@@ -135,6 +146,31 @@
             ctx.currentOrder = order;
             ctx.updateOrderTotals();
         };
+    });
+
+    app.controller("PaymentController", function ($http) {
+        //TODO: Figure it out if there is another workaround
+        var ctx = this;
+
+        ctx.currentPayment = {
+            id: 0,
+            orderId: 0,
+            paymentType: 0
+        };
+
+        ctx.payOrder = function (paymentTypeId, orderId) {
+            console.log("Pay Order id: ", orderId);
+            ctx.currentPayment.orderId = orderId;
+            ctx.currentPayment.paymentType = paymentTypeId;
+
+            $http.post("api/payments", ctx.currentPayment)
+                .then(function success(response) {
+                    console.log("Payment created", response.data);
+                }, function error(response) {
+                    alert("Ups! Something happened" + response.data);
+                });
+        };
+
     });
 
     app.controller("AboutController", function ($http) {

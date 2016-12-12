@@ -7,8 +7,7 @@
     <!-- First Row -->
     <div class="row"></div>
     <!-- Second Row Orders / Products list -->
-    <div class="row" ng-controller="OrdersController as orders">
-        
+    <div class="row" ng-controller="OrdersController as orders">       
         <!-- Current order section -->
         <div class="order col-md-6" >
             <table class="table table-striped">
@@ -55,8 +54,9 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-success" ng-disabled="orders.currentOrder.total == 0 || orders.currentOrder.status != 1" ng-click="orders.create()">Pay</button>
-            <button class="btn btn-warning" ng-click="orders.clear()">Clear</button>
+            <button class="btn btn-success" ng-disabled="orders.currentOrder.total == 0 || orders.currentOrder.status == 3" ng-click="orders.createAndPay(); tab = 3">Pay</button>
+            <button class="btn btn-default" ng-disabled="orders.currentOrder.total == 0 || orders.currentOrder.status > 0" ng-click="orders.createAndHold(); tab = 1">Hold</button>
+            <button class="btn btn-warning" ng-click="orders.clear(); tab = 1">Clear</button>
         </div>
         <!-- Tabs section -->
         <div>
@@ -109,16 +109,15 @@
                 </ul>
             </div>
             <!-- Payment section Tab 3 -->
-            <div class="payments col-md-6" ng-show="tab == 3">
+            <div class="payments col-md-6" ng-show="tab == 3" ng-controller="PaymentController as payments">
                 <ul>
                     @foreach (var p in Model.PaymentTypes)
                     {
-                        <li data-paymentId="@p.Key">@p.Value</li>
+                        <li ng-click="payments.payOrder(@p.Key, orders.currentOrder.id)"><a href>@p.Value</a></li>
                     }
                 </ul>
             </div>
-        </div>
-        
+        </div>      
     </div>
     <!-- Third Calculator / TopProducts -->
     <div class="row">
