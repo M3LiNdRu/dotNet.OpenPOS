@@ -26,6 +26,7 @@ namespace dotNet.OpenPOS.Repositories.Concrete
         public HashSet<Tax> Taxes { get; set; }
         public Account Account { get; set; }
         public HashSet<OrderReference> References { get; set; }
+        public HashSet<PrintedTicket> Tickets { get; set; }
 
         #endregion
 
@@ -162,6 +163,8 @@ namespace dotNet.OpenPOS.Repositories.Concrete
                     Status = OrderStatusType.Open
                 }
             };
+
+            Tickets = new HashSet<PrintedTicket>();
         }
     }
 }

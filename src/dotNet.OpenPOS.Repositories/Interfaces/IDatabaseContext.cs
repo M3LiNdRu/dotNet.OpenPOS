@@ -13,5 +13,6 @@ namespace dotNet.OpenPOS.Repositories.Interfaces
         HashSet<Tax> Taxes { get; set; }
         Account Account { get; set; }
         HashSet<OrderReference> References { get; set; }
+        HashSet<PrintedTicket> Tickets { get; set; }
     }
 }

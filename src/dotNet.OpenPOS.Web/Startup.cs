@@ -45,6 +45,7 @@ namespace dotNet.OpenPOS.Web
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderReferenceRepository, OrderReferenceRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IPrintedTicketRepository, PrintedTicketRepository>();
             services.AddScoped<ITaxRepository, TaxRepository>();
             services.AddScoped<IInventoryService, InventoryService>();
             services.AddScoped<IOrderService, OrderService>();
