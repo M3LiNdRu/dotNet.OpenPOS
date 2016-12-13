@@ -15,7 +15,7 @@ namespace dotNet.OpenPOS.Services.Interfaces
         Task<bool> UpdateOrderAsync(Order identity);
         Task<bool> DeleteOrderAsync(int id);
         Task<Ticket> GetTicketByOrderIdAsync(int id);
-        Task<bool> SavePrintedTicketAsync(string printedTicket);
+        Task<bool> SavePrintedTicketAsync(string printedTicket, int orderId);
 
     }
 }

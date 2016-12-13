@@ -94,9 +94,10 @@ namespace dotNet.OpenPOS.Services.Concrete
             return ticket;
         }
 
-        public async Task<bool> SavePrintedTicketAsync(string printedTicket)
+        public async Task<bool> SavePrintedTicketAsync(string printedTicket, int orderId)
         {
             var entity = new PrintedTicket();
+            entity.OrderId = orderId;
             entity.Ticket = printedTicket;
             entity.TIMESTAMP = DateTime.UtcNow;
 

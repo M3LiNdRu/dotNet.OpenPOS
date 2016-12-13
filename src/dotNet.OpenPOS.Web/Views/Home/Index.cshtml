@@ -3,11 +3,11 @@
     ViewData["Title"] = "OpenPOS Web Application";
 }
 
-<div id="container-pos">
+<div id="container-pos" ng-controller="OrdersController as orders">
     <!-- First Row -->
     <div class="row"></div>
     <!-- Second Row Orders / Products list -->
-    <div class="row" ng-controller="OrdersController as orders">       
+    <div class="row" ng-controller="PaymentsController as payments">       
         <!-- Current order section -->
         <div class="order col-md-6" >
             <table class="table table-striped">
@@ -109,11 +109,12 @@
                 </ul>
             </div>
             <!-- Payment section Tab 3 -->
-            <div class="payments col-md-6" ng-show="tab == 3" ng-controller="PaymentController as payments">
+            <div class="payments col-md-6" ng-show="tab == 3" ng-controller="TicketsController as tickets">
                 <ul>
                     @foreach (var p in Model.PaymentTypes)
                     {
-                        <li ng-click="payments.payOrder(@p.Key, orders.currentOrder.id)"><a href>@p.Value</a></li>
+                        <li  data-toggle="modal" data-target="#Ticket" 
+                            ng-click="payments.payOrder(@p.Key, orders.currentOrder.id); tickets.displayTicket(orders.currentOrder.id)"><a href>@p.Value</a></li>
                     }
                 </ul>
             </div>
@@ -136,6 +137,30 @@
             <p>Last update: {{ products.randomNumber }}</p>
         </div>
     </div>
+
+    <!-- Modal Ticket -->
+    <div id="Ticket" class="modal fade" role="dialog" ng-controller="TicketsController as tickets">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ticket {{ tickets.currentTicket.orderDetails.reference }}</h4>
+                </div>
+                <div class="modal-body">
+                    <p ng-repeat="(key, value) in tickets.currentTicket.orderDetails.products">
+                        <span>{{key}}</span><span>{{value.quantity}}</span><span>{{value.name}}</span><span>{{value.quantity * value.price}}</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-default">Print</button>
+                    <button type="button" class="close">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Hidden Data -->
     <div>
         <input id="inventory-data" type="hidden" data-content="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Products,new Newtonsoft.Json.JsonSerializerSettings

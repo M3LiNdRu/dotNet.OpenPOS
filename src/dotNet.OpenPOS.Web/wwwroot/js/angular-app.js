@@ -148,7 +148,7 @@
         };
     });
 
-    app.controller("PaymentController", function ($http) {
+    app.controller("PaymentsController", function ($http) {
         //TODO: Figure it out if there is another workaround
         var ctx = this;
 
@@ -166,6 +166,43 @@
             $http.post("api/payments", ctx.currentPayment)
                 .then(function success(response) {
                     console.log("Payment created", response.data);
+                }, function error(response) {
+                    alert("Ups! Something happened" + response.data);
+                });
+        };
+
+    });
+
+    app.controller("TicketsController", function ($http) {
+        //TODO: Figure it out if there is another workaround
+        var ctx = this;
+
+        ctx.currentTicket = { };
+        ctx.currentTicketHtml = {
+            orderId: 0,
+            ticket: ""
+        };
+
+        ctx.displayTicket = function (orderId) {
+            console.log("Display ticket of order: ", orderId);
+
+            $http.get("api/tickets/" + orderId)
+                .then(function success(response) {
+                    console.log("Ticket received", response.data);
+                    ctx.currentTicket = response.data.data;
+                }, function error(response) {
+                    alert("Ups! Something happened" + response.data);
+                });
+        };
+
+        ctx.saveTicketHtml = function (ticket) {
+            console.log("Saving ticket of order: ", ctx.currentTicket.orderId);
+            ctx.currentTicketHtml.orderId = ctx.currentTicket.orderId;
+            ctx.currentTicketHtml.ticket = ticket;
+
+            $http.post("api/tickets", ctx.currentTicketHtml)
+                .then(function success(response) {
+                    console.log("Ticket saved", response.data);
                 }, function error(response) {
                     alert("Ups! Something happened" + response.data);
                 });
