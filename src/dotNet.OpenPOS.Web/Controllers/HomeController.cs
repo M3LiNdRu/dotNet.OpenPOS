@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using dotNet.OpenPOS.Repositories.Interfaces;
 
 namespace dotNet.OpenPOS.Web.Controllers
 {
@@ -16,18 +17,18 @@ namespace dotNet.OpenPOS.Web.Controllers
         private readonly IOptions<AppSettings> _optionsAccessor;
         private readonly IConfigurationRoot _configuration;
         private readonly IPaymentService _paymentService;
-        private readonly IServiceProvider _services;
+        private readonly ISettingsService _settings;
 
         public HomeController(IInventoryService inventoryService,IOrderService orderService,
             IOptions<AppSettings> optionsAccessor, IConfigurationRoot configuration, 
-            IPaymentService paymentService, IServiceProvider services)
+            IPaymentService paymentService, ISettingsService settings)
         {
             _inventoryService = inventoryService;
             _orderService = orderService;
             _optionsAccessor = optionsAccessor;
             _configuration = configuration;
             _paymentService = paymentService;
-            _services = services;
+            _settings = settings;
         }
 
         public async Task<IActionResult> Index()
@@ -70,8 +71,7 @@ namespace dotNet.OpenPOS.Web.Controllers
 
         public async Task<IActionResult> Recycle()
         {
-            var serviceCollection = _services.GetRequiredService<IServiceCollection>();
-            serviceCollection.Clear();
+            _settings.RefreshDatabaseContext();
 
             return Json(new { success = true, message = "Singleton objects has been disposed" });
         }

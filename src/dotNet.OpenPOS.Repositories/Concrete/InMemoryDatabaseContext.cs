@@ -166,5 +166,17 @@ namespace dotNet.OpenPOS.Repositories.Concrete
 
             Tickets = new HashSet<PrintedTicket>();
         }
+
+        public void Dispose()
+        {
+            this.Orders = null;
+            this.Payments = null;
+            this.Products = null;
+            this.Families = null;
+            this.Taxes = null;
+            this.Account = null;
+            this.References = null;
+            this.Tickets = null;
+        }
     }
 }

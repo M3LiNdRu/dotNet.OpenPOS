@@ -1,10 +1,11 @@
 ﻿
 using dotNet.OpenPOS.Domain.Models;
+using System;
 using System.Collections.Generic;
 
 namespace dotNet.OpenPOS.Repositories.Interfaces
 {
-    public interface IDatabaseContext
+    public interface IDatabaseContext : IDisposable
     {
         HashSet<Order> Orders { get; set; }
         HashSet<Payment> Payments { get; set; }
@@ -14,5 +15,7 @@ namespace dotNet.OpenPOS.Repositories.Interfaces
         Account Account { get; set; }
         HashSet<OrderReference> References { get; set; }
         HashSet<PrintedTicket> Tickets { get; set; }
+
+        void Initialize();
     }
 }
